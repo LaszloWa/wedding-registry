@@ -3,7 +3,7 @@ import "./App.scss";
 // import { getGifts } from "../lambda_functions/get-gifts.js.js";
 
 const App = () => {
-	const [gifts, setGifts] = useState([]);
+	const [gifts] = useState([]);
 
 	useEffect(() => {
 		fetch("/.netlify/lambda_functions/get-gifts").then((res) =>
