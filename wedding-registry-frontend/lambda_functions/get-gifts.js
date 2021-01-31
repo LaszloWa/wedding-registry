@@ -16,7 +16,6 @@ exports.handler = (event, context, callback) => {
 	return client
 		.fetch(query)
 		.then((res) => {
-			console.log(res);
 			return callback(null, {
 				statusCode: 200,
 				body: JSON.stringify(res),

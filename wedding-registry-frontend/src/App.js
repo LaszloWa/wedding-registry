@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./App.scss";
-// import { getGifts } from "../lambda_functions/get-gifts.js.js";
 
 const App = () => {
 	const [gifts, setGifts] = useState([]);
@@ -10,8 +9,6 @@ const App = () => {
 			.then((res) => res.json())
 			.then((data) => setGifts(data));
 	}, []);
-
-	console.log(gifts);
 
 	return (
 		<div className="app">
