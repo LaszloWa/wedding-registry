@@ -3,13 +3,15 @@ import "./App.scss";
 // import { getGifts } from "../lambda_functions/get-gifts.js.js";
 
 const App = () => {
-	const [gifts] = useState([]);
+	const [gifts, setGifts] = useState([]);
 
 	useEffect(() => {
-		fetch("/.netlify/lambda_functions/get-gifts").then((res) =>
-			console.log(res),
-		);
+		fetch("/.netlify/functions/get-gifts")
+			.then((res) => res.json())
+			.then((data) => setGifts(data));
 	}, []);
+
+	console.log(gifts);
 
 	return (
 		<div className="app">
