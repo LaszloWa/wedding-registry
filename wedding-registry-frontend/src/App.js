@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./App.scss";
-import { getGifts } from "./lambda_functions/get-gifts.js";
+// import { getGifts } from "../lambda_functions/get-gifts.js.js";
 
 const App = () => {
 	const [gifts, setGifts] = useState([]);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const result = await getGifts();
-			setGifts(result);
-		};
-		fetchData();
+		fetch("/.netlify/lambda_functions/get-gifts").then((res) =>
+			console.log(res),
+		);
 	}, []);
-
-	console.log(gifts);
 
 	return (
 		<div className="app">

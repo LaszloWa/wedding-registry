@@ -1,3 +1,4 @@
+require("dotenv").config();
 const sanityClient = require("@sanity/client");
 
 export const client = sanityClient({
