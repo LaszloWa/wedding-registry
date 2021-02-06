@@ -37,7 +37,7 @@ exports.handler = async (event) => {
 		const payload = jwt.verify(cookies.jwt, publicKey);
 
 		return {
-			statusCode: 401,
+			statusCode: 200,
 			headers: {
 				"Content-Type": "application/json",
 			},
