@@ -19,6 +19,8 @@ rMbu85U1AAG5hPO3ufAWep3Ys9SzAMEoXKEl5wDF4APUpkUazXg3B5ti43TYrCLN
 exports.handler = (event) => {
 	const cookies = event.headers.cookie && cookie.parse(event.headers.cookie);
 
+	console.log(cookies);
+
 	if (!cookies || !cookies.jwt) {
 		return {
 			statusCode: 401,
@@ -28,32 +30,25 @@ exports.handler = (event) => {
 		};
 	}
 
-	return {
-		statusCode: 401,
-		body: JSON.stringify({
-			msg: "There is no jwt cookie, so the request is unauthorized",
-		}),
-	};
+	try {
+		// verify throws an error if it can't verify the jwt.
+		// By default it also checks the exp claim, which is
+		// where our expiry information is.
+		// If the token is successfully verified,
+		// it returns the payload.
+		const payload = jwt.verify(cookies.jwt, publicKey);
 
-	// try {
-	// 	// verify throws an error if it can't verify the jwt.
-	// 	// By default it also checks the exp claim, which is
-	// 	// where our expiry information is.
-	// 	// If the token is successfully verified,
-	// 	// it returns the payload.
-	// 	const payload = jwt.verify(cookies.jwt, publicKey);
-
-	// 	return {
-	// 		statusCode: 200,
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 		},
-	// 		body: JSON.stringify({ username: payload.username }),
-	// 	};
-	// } catch (err) {
-	// 	return {
-	// 		statusCode: 401,
-	// 		body: JSON.stringify({ msg: err.message }),
-	// 	};
-	// }
+		return {
+			statusCode: 200,
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ username: "potatoes" }),
+		};
+	} catch (err) {
+		return {
+			statusCode: 401,
+			body: JSON.stringify({ msg: err.message }),
+		};
+	}
 };
