@@ -2,7 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie");
 
-function createJwtCookie(username) {
+const createJwtCookie = async (username) => {
 	const secretKey =
 		"-----BEGIN RSA PRIVATE KEY-----\n" +
 		process.env.JWT_SECRET_KEY +
@@ -20,9 +20,9 @@ function createJwtCookie(username) {
 	});
 
 	return jwtCookie;
-}
+};
 
-exports.handler = (event) => {
+exports.handler = async (event) => {
 	let errorStatusCode = 500;
 	const appPassword = process.env.APP_PASSWORD;
 
