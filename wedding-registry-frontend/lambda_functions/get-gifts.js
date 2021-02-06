@@ -15,7 +15,7 @@ const imageUrl = (source) => builder.image(source);
 
 const query = '*[_type == "gift"]';
 
-exports.handler = async (callback) => {
+exports.handler = async (event, handler, callback) => {
 	console.log("Fetching all gifts!");
 
 	return client
