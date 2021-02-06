@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useAuth } from "providers/auth-provider";
+import { useAuth } from "./providers/auth-provider";
 
-import GiftListPage from "pages/gift-list-page/gift-list-page";
-import LogInPage from "pages/log-in-page/log-in-page";
-
-import "./App.scss";
+import GiftListPage from "./pages/gift-list-page/gift-list-page";
+import LogInPage from "./pages/log-in-page/log-in-page";
 
 const App = () => {
 	const { user, authenticate } = useAuth();
