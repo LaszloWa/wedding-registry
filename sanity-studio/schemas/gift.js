@@ -30,5 +30,13 @@ export default {
 				},
 			],
 		},
+		{
+			title: "Purchased",
+			name: "isPurchased",
+			type: "boolean",
+		},
 	],
+	initialValue: {
+		isPurchased: false,
+	},
 };
