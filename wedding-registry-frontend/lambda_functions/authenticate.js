@@ -19,7 +19,7 @@ rMbu85U1AAG5hPO3ufAWep3Ys9SzAMEoXKEl5wDF4APUpkUazXg3B5ti43TYrCLN
 exports.handler = (event) => {
 	const cookies = event.headers.cookie && cookie.parse(event.headers.cookie);
 
-	console.log(cookies);
+	console.log(event.headers);
 
 	if (!cookies || !cookies.jwt) {
 		return {
@@ -39,11 +39,11 @@ exports.handler = (event) => {
 		const payload = jwt.verify(cookies.jwt, publicKey);
 
 		return {
-			statusCode: 200,
+			statusCode: 401,
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ username: "potatoes" }),
+			body: JSON.stringify({ username: payload.username }),
 		};
 	} catch (err) {
 		return {
