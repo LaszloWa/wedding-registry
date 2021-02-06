@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import GiftListPage from "pages/gift-list-page/gift-list-page";
+import LogInPage from "pages/log-in-page/log-in-page";
+
 import "./App.scss";
 
 const App = () => {
-	const [gifts, setGifts] = useState([]);
-
-	useEffect(() => {
-		fetch("/.netlify/functions/get-gifts")
-			.then((res) => res.json())
-			.then((data) => setGifts(data));
-	}, []);
-
 	return (
-		<div className="app">
-			<h1>Stay tuned for something amazing!</h1>
-			<ul className="app__gifts">
-				{gifts.map(({ name, link }) => (
-					<a href={link}>{name}</a>
-				))}
-			</ul>
-		</div>
+		<Router>
+			<Switch>
+				<Route path="/gift-ideas">
+					<GiftListPage />
+				</Route>
+				<Route page="/">
+					<LogInPage />
+				</Route>
+			</Switch>
+		</Router>
 	);
 };
 
