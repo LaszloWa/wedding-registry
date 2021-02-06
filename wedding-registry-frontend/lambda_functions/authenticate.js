@@ -19,6 +19,8 @@ rMbu85U1AAG5hPO3ufAWep3Ys9SzAMEoXKEl5wDF4APUpkUazXg3B5ti43TYrCLN
 exports.handler = (event) => {
 	const cookies = event.headers.cookie && cookie.parse(event.headers.cookie);
 
+	console.log("running authenticate!");
+
 	if (!cookies || !cookies.jwt) {
 		return {
 			statusCode: 401,
@@ -35,6 +37,7 @@ exports.handler = (event) => {
 		// If the token is successfully verified,
 		// it returns the payload.
 		const payload = jwt.verify(cookies.jwt, publicKey);
+
 		return {
 			statusCode: 200,
 			headers: {

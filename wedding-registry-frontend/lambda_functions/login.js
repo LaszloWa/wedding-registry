@@ -28,7 +28,6 @@ exports.handler = (event) => {
 
 	const { username, password } = JSON.parse(event.body);
 
-	console.log(username, password);
 	try {
 		const matches = appPassword === password;
 
@@ -47,7 +46,7 @@ exports.handler = (event) => {
 				"Set-Cookie": jwtCookie,
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ id: username }),
+			body: JSON.stringify({ username: username }),
 		};
 	} catch (err) {
 		return {
