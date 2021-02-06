@@ -1,13 +1,18 @@
 import React from "react";
+import { useAuth } from "../../providers/auth-provider";
 
 const LogInPage = () => {
+	const { login } = useAuth();
+
 	const handleLogin = (event) => {
 		event.preventDefault();
 
-		const username = event.target.username.value;
-		const password = event.target.password.value;
+		const requestBody = {
+			username: event.target.username.value,
+			password: event.target.password.value,
+		};
 
-		console.log("submitting: ", username, password);
+		login(requestBody);
 	};
 
 	return (
