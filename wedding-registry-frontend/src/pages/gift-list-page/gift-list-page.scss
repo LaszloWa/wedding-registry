@@ -1,0 +1,9 @@
+.gift-list-page {
+	text-align: center;
+
+	&__gifts {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+}
