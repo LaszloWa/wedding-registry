@@ -21,13 +21,15 @@ exports.handler = (event, context, callback) => {
 	return client
 		.fetch(query)
 		.then((res) =>
-			res.map((gift) => ({
-				...gift,
-				image: {
-					...gift.image,
-					src: imageUrl(gift.image).height(200).url(),
-				},
-			})),
+			res
+				.filter((item) => !item.isPurchased)
+				.map((gift) => ({
+					...gift,
+					image: {
+						...gift.image,
+						src: imageUrl(gift.image).height(200).url(),
+					},
+				})),
 		)
 		.then((gifts) => {
 			return callback(null, {
