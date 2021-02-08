@@ -15,12 +15,8 @@ const GiftListPage = () => {
 			name: e.target.name,
 			id: e.target.value,
 		};
-
-		console.log(requestBody);
 		sendRequest("update-gift", requestBody);
 	};
-
-	console.log(gifts);
 
 	return (
 		<div className="gift-list-page">
