@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import sendRequest from "../api-helper";
 
 const AuthContext = createContext({});
 
@@ -23,30 +24,6 @@ function AuthProvider({ children }) {
 			{children}
 		</AuthContext.Provider>
 	);
-}
-
-async function sendRequest(endpoint, body, successCallback) {
-	const requestOptions = {
-		method: "POST",
-		headers: {
-			Accept: "application/json",
-		},
-	};
-
-	if (body) {
-		requestOptions.headers["Content-Type"] = "application/json";
-		requestOptions.body = JSON.stringify(body);
-	}
-
-	const response = await fetch(
-		`/.netlify/functions/${endpoint}`,
-		requestOptions,
-	);
-
-	if (response.ok) {
-		const responseBody = await response.json();
-		successCallback(responseBody);
-	}
 }
 
 const useAuth = () => useContext(AuthContext);
