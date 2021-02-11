@@ -1,7 +1,6 @@
 require("dotenv").config();
-const fetch = require("node-fetch");
 const sanityClient = require("@sanity/client");
-const { URL } = process.env;
+const fetch = require("node-fetch");
 
 const client = sanityClient({
 	projectId: process.env.REACT_APP_SANITY_PROJECT_ID,
