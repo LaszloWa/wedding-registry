@@ -38,7 +38,6 @@ exports.handler = async (event, handler, callback) => {
 			});
 		})
 		.catch((error) => {
-			console.log("error", error);
 			return callback(null, {
 				statusCode: 400,
 				body: JSON.stringify(error),
