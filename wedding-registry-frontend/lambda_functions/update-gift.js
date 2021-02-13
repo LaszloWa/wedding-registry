@@ -1,7 +1,5 @@
 require("dotenv").config();
-const fetch = require("node-fetch");
 const sanityClient = require("@sanity/client");
-const { URL } = process.env;
 
 const client = sanityClient({
 	projectId: process.env.REACT_APP_SANITY_PROJECT_ID,
@@ -11,8 +9,6 @@ const client = sanityClient({
 });
 
 exports.handler = async (event, handler, callback) => {
-	const { name, id, revisionId } = JSON.parse(event.body);
-	console.log(`Updating gift ${name}!`);
 
 	const authenticate = await fetch(`${URL}/.netlify/functions/authenticate`, {
 		method: "POST",
