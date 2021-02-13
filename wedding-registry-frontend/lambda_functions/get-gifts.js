@@ -22,7 +22,7 @@ exports.handler = async (event, handler, callback) => {
 		.fetch(query)
 		.then((res) =>
 			res
-				.filter((item) => !item.isReserved)
+				.filter((item) => !item.isPurchased)
 				.map((gift) => ({
 					...gift,
 					image: {
