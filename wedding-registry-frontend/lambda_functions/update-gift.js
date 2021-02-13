@@ -1,5 +1,7 @@
 require("dotenv").config();
 const sanityClient = require("@sanity/client");
+const fetch = require("node-fetch");
+const { URL } = process.env;
 
 const client = sanityClient({
 	projectId: process.env.REACT_APP_SANITY_PROJECT_ID,
@@ -9,12 +11,33 @@ const client = sanityClient({
 });
 
 exports.handler = async (event, handler, callback) => {
-	const { name, id } = JSON.parse(event.body);
+	const { name, id, revisionId } = JSON.parse(event.body);
 	console.log(`Updating gift ${name}!`);
+
+	const authenticate = await fetch(`${URL}/.netlify/functions/authenticate`, {
+		method: "POST",
+		headers: {
+			...event.headers,
+		},
+	});
+
+	if (authenticate.status !== 200) {
+		console.log("Unauthorized request!");
+		return {
+			statusCode: 401,
+			body: JSON.stringify({
+				msg:
+					"You are not authorized to change gifts! Please try logging in again.",
+			}),
+		};
+	}
+
+	const user = await authenticate.json();
 
 	return client
 		.patch(id) // Document ID to patch
-		.set({ isPurchased: true }) // Shallow merge
+		.ifRevisionId(revisionId)
+		.set({ isReserved: true, reservedBy: user.username }) // Shallow merge
 		.commit() // Perform the patch and return a promise
 		.then((response) => {
 			return {
@@ -22,10 +45,22 @@ exports.handler = async (event, handler, callback) => {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(`Gift ${response.name} successfully updated!`),
+				body: JSON.stringify(`Gift ${response.name} successfully reserved!`),
 			};
 		})
 		.catch((err) => {
+			if (err.statusCode === 409) {
+				return {
+					statusCode: 409,
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(
+						`Your data seems to be outdated! Gift ${name} has already been reserved! Please refresh the page!`,
+					),
+				};
+			}
+
 			return {
 				statusCode: err.statusCode,
 				body: JSON.stringify({ msg: err.message }),
