@@ -3,6 +3,8 @@ import sendRequest from "../../api-helper";
 
 const GiftListPage = () => {
 	const [gifts, setGifts] = useState([]);
+	const [successMessage, setSuccessMessage] = useState(undefined);
+	const [errorMessage, setErrorMessage] = useState(undefined);
 
 	useEffect(() => {
 		fetch("/.netlify/functions/get-gifts")
@@ -11,19 +13,23 @@ const GiftListPage = () => {
 	}, []);
 
 	const handleReserveGift = (e) => {
+		setSuccessMessage(undefined);
+		setErrorMessage(undefined);
+
 		const requestBody = {
 			name: e.target.name,
 			id: e.target.value,
 			revisionId: e.target.getAttribute("data-revision-id"),
 		};
 
-		console.log(requestBody);
-		sendRequest("update-gift", requestBody);
+		sendRequest("update-gift", requestBody, setSuccessMessage, setErrorMessage);
 	};
 
 	return (
 		<div className="gift-list-page">
 			<h1>Stay tuned for something amazing!</h1>
+			{successMessage && <p className="success-message">{successMessage}</p>}
+			{errorMessage && <p className="error-message">{errorMessage}</p>}
 			<ul className="gift-list-page__gifts">
 				{gifts.map(({ _id, image, link, name, _rev }) => (
 					<li key={_id}>
