@@ -1,32 +1,32 @@
-import React, { createContext, useContext, useState } from "react";
-import sendRequest from "../api-helper";
+import React, { createContext, useContext, useState } from "react"
+import sendRequest from "../api-helper"
 
-const AuthContext = createContext({});
+const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
-	const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState(undefined)
 
-	const saveUser = (user) => {
-		setUser(user);
-	};
+  const saveUser = (user) => {
+    setUser(user)
+  }
 
-	const deleteUser = () => {
-		setUser(null);
-	};
+  const deleteUser = () => {
+    setUser(null)
+  }
 
-	const login = (user, errorCallback) =>
-		sendRequest("login", user, saveUser, errorCallback);
-	const logout = () => sendRequest("logout", undefined, deleteUser);
+  const login = (user, callback) =>
+    sendRequest("login", user, saveUser, callback)
+  const logout = () => sendRequest("logout", undefined, deleteUser)
 
-	const authenticate = () => sendRequest("authenticate", undefined, saveUser);
+  const authenticate = () => sendRequest("authenticate", undefined, saveUser)
 
-	return (
-		<AuthContext.Provider value={{ user, authenticate, login, logout }}>
-			{children}
-		</AuthContext.Provider>
-	);
+  return (
+    <AuthContext.Provider value={{ user, authenticate, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
-const useAuth = () => useContext(AuthContext);
+const useAuth = () => useContext(AuthContext)
 
-export { useAuth, AuthProvider };
+export { useAuth, AuthProvider }

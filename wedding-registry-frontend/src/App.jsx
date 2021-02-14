@@ -1,35 +1,34 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useAuth } from "./providers/auth-provider";
-
-import GiftListPage from "./pages/gift-list-page/gift-list-page";
-import LogInPage from "./pages/log-in-page/log-in-page";
-
+import React, { useEffect } from "react"
+import { Route } from "react-router-dom"
+import { useAuth } from "./providers/auth-provider"
+import { LoginPage, GiftPage } from "./pages"
+import { DefaultLayout } from "./layout"
 const App = () => {
-	const { user, authenticate } = useAuth();
+  const { user, authenticate } = useAuth()
 
-	useEffect(() => {
-		authenticate();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+  useEffect(() => {
+    authenticate()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-	return user ? (
-		<Router>
-			<Switch>
-				<Route path="/">
-					<GiftListPage />
-				</Route>
-			</Switch>
-		</Router>
-	) : (
-		<Router>
-			<Switch>
-				<Route page="/">
-					<LogInPage />
-				</Route>
-			</Switch>
-		</Router>
-	);
-};
+  if (!user) {
+    return (
+      <DefaultLayout user={user}>
+        <LoginPage />
+      </DefaultLayout>
+    )
+  }
 
-export default App;
+  return (
+    <DefaultLayout user={user}>
+      <Route page="/">
+        <GiftPage />
+      </Route>
+      {/* <Route path="/">
+        <LandingPage />
+      </Route> */}
+    </DefaultLayout>
+  )
+}
+
+export default App
