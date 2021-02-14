@@ -16,6 +16,7 @@ function AuthProvider({ children }) {
 
 	const login = (user, errorCallback) =>
 		sendRequest("login", user, saveUser, errorCallback);
+
 	const logout = () => sendRequest("logout", undefined, deleteUser);
 
 	const authenticate = () => sendRequest("authenticate", undefined, saveUser);

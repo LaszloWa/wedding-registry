@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import sendRequest from "../../api-helper";
+import { useAuth } from "../../providers/auth-provider";
 
 const GiftListPage = () => {
+	const { user } = useAuth();
 	const [gifts, setGifts] = useState([]);
 	const [successMessage, setSuccessMessage] = useState(undefined);
 	const [errorMessage, setErrorMessage] = useState(undefined);
@@ -25,9 +27,17 @@ const GiftListPage = () => {
 		sendRequest("update-gift", requestBody, setSuccessMessage, setErrorMessage);
 	};
 
+	console.log(user);
+
+	const welcomeMessage = user
+		? user.username === ("Yannek" || "Piwi")
+			? "Hallo kleiner Piwi!"
+			: `Welcome ${user.username}! We are looking forward to having you at our wedding and hope you enjoy the site!`
+		: "Welcome to our wedding registry!";
+
 	return (
 		<div className="gift-list-page">
-			<h1>Stay tuned for something amazing!</h1>
+			<h2>{welcomeMessage}</h2>
 			{successMessage && <p className="success-message">{successMessage}</p>}
 			{errorMessage && <p className="error-message">{errorMessage}</p>}
 			<ul className="gift-list-page__gifts">
