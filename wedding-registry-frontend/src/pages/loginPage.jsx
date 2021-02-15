@@ -11,7 +11,22 @@ import {
 } from "@sanity/ui"
 import React, { useState } from "react"
 import { useAuth } from "../providers/auth-provider"
-import { EyeOpenIcon, EyeClosedIcon, RocketIcon } from "@sanity/icons"
+import { EyeOpenIcon, EyeClosedIcon } from "@sanity/icons"
+import styled from "styled-components"
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  pointer-events: auto;
+  --card-bg-color: #73896a;
+  --card-border-color: #73896a;
+  --card-fg-color: #fff;
+
+  &:not([data-disabled="true"]):hover {
+    --card-bg-color: #536348;
+    --card-border-color: #536348;
+    --card-fg-color: #fff;
+  }
+`
 
 export const LoginPage = () => {
   const { login } = useAuth()
@@ -40,7 +55,7 @@ export const LoginPage = () => {
   return (
     <Container style={{ maxWidth: "400px" }}>
       <Card height="fill">
-        <Stack space={5}>
+        <Stack space={5} padding={6}>
           <Stack space={5} as="form" onSubmit={handleLogin}>
             <Stack space={3}>
               <Text weight="semibold" as="label" htmlFor="username">
@@ -50,7 +65,7 @@ export const LoginPage = () => {
             </Stack>
             <Stack space={3}>
               <Text weight="semibold" htmlFor="password">
-                Entry code
+                Password
               </Text>
               <Text size={1} muted>
                 Hint: where will the ceremony take place?
@@ -81,12 +96,7 @@ export const LoginPage = () => {
                 }
               />
             </Stack>
-            <Button
-              type="submit"
-              text="Log in"
-              tone="primary"
-              icon={RocketIcon}
-            />
+            <StyledButton type="submit" text="Enter" tone="primary" />
           </Stack>
         </Stack>
       </Card>

@@ -34,11 +34,15 @@ exports.handler = async (event, handler, callback) => {
   }
 
   const user = await authenticate.json()
-
+  const today = new Date().toISOString()
   return client
     .patch(id) // Document ID to patch
     .ifRevisionId(revisionId)
-    .set({ isReserved: isReserved, reservedBy: isReserved ? user.name : "" }) // Shallow merge
+    .set({
+      isReserved: isReserved,
+      reservedBy: isReserved ? user.username : "",
+      reservedAt: isReserved ? today : "",
+    }) // Shallow merge
     .commit() // Perform the patch and return a promise
     .then((response) => {
       const giftName = response.name
