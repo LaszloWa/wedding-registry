@@ -2,7 +2,16 @@ import { GiftItem } from "../components"
 import React, { useEffect, useState } from "react"
 import sendRequest from "../api-helper"
 import styled from "styled-components"
-import { Text, Flex, Box, Radio, Inline, useToast } from "@sanity/ui"
+import {
+  Stack,
+  Text,
+  Flex,
+  Box,
+  Radio,
+  Inline,
+  useToast,
+  Spinner,
+} from "@sanity/ui"
 
 const Grid = styled.div`
   display: grid;
@@ -20,6 +29,7 @@ const priceRanges = [
 
 export const GiftPage = () => {
   const [gifts, setGifts] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const [activePriceFilter, setActivePriceFilter] = useState("all") // all, 1, 2, 3
 
   const handleSelectPrice = (e) => {
@@ -29,9 +39,13 @@ export const GiftPage = () => {
   const toast = useToast()
 
   useEffect(() => {
+    setIsLoading(true)
     fetch("/.netlify/functions/get-gifts")
       .then((res) => res.json())
-      .then((data) => setGifts(data))
+      .then((data) => {
+        setGifts(data)
+        setIsLoading(false)
+      })
   }, [])
 
   const sendResponseToast = (response) => {
@@ -58,38 +72,50 @@ export const GiftPage = () => {
     <Box>
       <Grid columns={[1, 1, 4]} gap={3}>
         <Flex align="center" justify={"center"} style={{ gridColumn: "1/-1" }}>
-          <Inline space={3}>
-            {priceRanges.map((price) => (
-              <Flex align="center" key={price.value}>
-                <Box paddingRight={2}>
-                  <Radio
-                    value={price.value}
-                    name="price"
-                    checked={activePriceFilter === price.value}
-                    onChange={handleSelectPrice}
-                  />
-                </Box>
-                <Text size={1} muted>
-                  {price.label}
-                </Text>
+          {isLoading ? (
+            <Stack space={3} style={{ minHeight: "40vh" }} paddingTop={2}>
+              <Flex justify="center">
+                <Spinner muted size={1} />
               </Flex>
-            ))}
-          </Inline>
+              <Text size={1} muted align="center">
+                Loading gifts...
+              </Text>
+            </Stack>
+          ) : (
+            <Inline space={3}>
+              {priceRanges.map((price) => (
+                <Flex align="center" key={price.value}>
+                  <Box paddingRight={2}>
+                    <Radio
+                      value={price.value}
+                      name="price"
+                      checked={activePriceFilter === price.value}
+                      onChange={handleSelectPrice}
+                    />
+                  </Box>
+                  <Text size={1} muted>
+                    {price.label}
+                  </Text>
+                </Flex>
+              ))}
+            </Inline>
+          )}
         </Flex>
-        {gifts
-          .filter((gift) => {
-            return (
-              activePriceFilter === "all" ||
-              gift.priceCategory === +activePriceFilter
-            )
-          })
-          .map((gift) => (
-            <GiftItem
-              key={gift._id}
-              gift={gift}
-              onClick={(isReserved) => handleReserveGift(gift, isReserved)}
-            />
-          ))}
+        {!isLoading &&
+          gifts
+            .filter((gift) => {
+              return (
+                activePriceFilter === "all" ||
+                gift.priceCategory === +activePriceFilter
+              )
+            })
+            .map((gift) => (
+              <GiftItem
+                key={gift._id}
+                gift={gift}
+                onClick={(isReserved) => handleReserveGift(gift, isReserved)}
+              />
+            ))}
       </Grid>
     </Box>
   )
