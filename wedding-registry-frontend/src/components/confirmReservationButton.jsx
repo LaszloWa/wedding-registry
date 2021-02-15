@@ -110,15 +110,16 @@ export const ConfirmReservationButton = ({
           </Box>
         }
       >
-        <StyledButton
-          // as={isReserved ? "span" : "button"}
-          tone="brand"
-          mode="ghost"
-          text={isReserved ? "Reserved" : "Reserve gift"}
-          icon={HeartIcon}
-          onClick={handleOpenDialog}
-          disabled={isReserved}
-        />
+        <div style={{ width: "100%" }}>
+          <StyledButton
+            tone="brand"
+            mode="ghost"
+            text={isReserved ? "Reserved" : "Reserve"}
+            icon={HeartIcon}
+            onClick={handleOpenDialog}
+            disabled={isReserved}
+          />
+        </div>
       </Tooltip>
     </>
   )
