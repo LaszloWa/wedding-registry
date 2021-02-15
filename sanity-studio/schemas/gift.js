@@ -32,6 +32,22 @@ export default {
       type: "string",
     },
     {
+      title: "Links",
+      type: "array",
+      name: "links",
+      of: [
+        {
+          type: "object",
+          title: "Link",
+          fields: [
+            { type: "string", name: "label", title: "Label" },
+            { type: "url", name: "href", title: "URL" },
+            { type: "string", name: "country", title: "Country code" },
+          ],
+        },
+      ],
+    },
+    {
       title: "Image",
       name: "image",
       type: "image",
@@ -55,6 +71,11 @@ export default {
       title: "Reserved by",
       name: "reservedBy",
       type: "string",
+    },
+    {
+      title: "Reserved at",
+      name: "reservedAt",
+      type: "datetime",
     },
   ],
   initialValue: {
