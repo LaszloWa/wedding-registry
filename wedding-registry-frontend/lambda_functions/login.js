@@ -29,7 +29,7 @@ exports.handler = async (event) => {
 	const { username, password } = JSON.parse(event.body);
 
 	try {
-		const matches = appPassword === password;
+		const matches = appPassword.toLowerCase() === password.toLowerCase();
 
 		if (!matches) {
 			errorStatusCode = 401;
