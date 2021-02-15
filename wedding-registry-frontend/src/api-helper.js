@@ -36,10 +36,16 @@ async function sendRequest(endpoint, body, successCallback, errorCallback) {
 	}
 
 	if (response.ok && successCallback) {
+    if (response.status === 200) {
 		return successCallback({
-			title: "Welcome!",
+        title: "Gift successfully reserved!",
 			status: "success",
-		});
+      })
+    }
+    return successCallback({
+      title: "Success!",
+      status: "success",
+    })
 	}
 }
 
