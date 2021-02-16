@@ -55,7 +55,7 @@ export const LoginPage = () => {
   return (
     <Container style={{ maxWidth: "400px" }}>
       <Card height="fill">
-        <Stack space={5} padding={6}>
+        <Stack space={5} padding={[5, 5, 6]}>
           <Stack space={5} as="form" onSubmit={handleLogin}>
             <Stack space={3}>
               <Text weight="semibold" as="label" htmlFor="username">

@@ -1,4 +1,4 @@
-import { GiftItem } from "../components"
+import { GiftItem, Prompt } from "../components"
 import React, { useEffect, useState } from "react"
 import sendRequest from "../api-helper"
 import styled from "styled-components"
@@ -69,7 +69,14 @@ export const GiftPage = () => {
   }
 
   return (
-    <Box>
+    <>
+      <Flex justify="center">
+        <Prompt
+          title="Please don't feel obliged to get us a gift, your presence at our wedding is more than enough."
+          margin={2}
+          tone="positive"
+        />
+      </Flex>
       <Grid columns={[1, 1, 4]} gap={3}>
         <Flex align="center" justify={"center"} style={{ gridColumn: "1/-1" }}>
           {isLoading ? (
@@ -117,6 +124,6 @@ export const GiftPage = () => {
               />
             ))}
       </Grid>
-    </Box>
+    </>
   )
 }

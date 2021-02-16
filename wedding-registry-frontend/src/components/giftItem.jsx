@@ -10,6 +10,8 @@ import {
   MenuButton,
   Menu,
   MenuItem,
+  Tooltip,
+  Inline,
 } from "@sanity/ui"
 import { LinkIcon } from "@sanity/icons"
 import styled from "styled-components"
@@ -54,6 +56,8 @@ const Link = styled(Text)`
   display: flex;
   align-items: center;
 `
+
+const priceLabels = ["", "Low", "Medium", "High"]
 
 const StyledButton = styled(Button)`
   --card-fg-color: ${({ theme }) => theme.sanity.color.base.fg};
@@ -177,12 +181,27 @@ export const GiftItem = ({ gift, onClick, children }) => {
               />
             </Flex>
           </Text>
-          <Text size={1} muted>
-            {price(priceCategory)}
-          </Text>
+
+          <Inline>
+            <Tooltip
+              portal
+              content={
+                <Box padding={3} style={{ maxWidth: "180px" }}>
+                  <Text size={1} muted>
+                    {priceLabels[priceCategory]} price
+                  </Text>
+                </Box>
+              }
+            >
+              <Text size={1} muted>
+                {price(priceCategory)}
+              </Text>
+            </Tooltip>
+          </Inline>
+
           <Flex>
             <ConfirmReservationButton
-              giftName={name}
+              gift={gift}
               onConfirm={handleConfirm}
               isReserved={isReserved}
             />

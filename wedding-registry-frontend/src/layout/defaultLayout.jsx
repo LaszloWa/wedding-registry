@@ -46,7 +46,7 @@ export const DefaultLayout = ({ user, children }) => {
                 style={{ minHeight: "100vh", width: "100%" }}
               >
                 <Container>
-                  <Stack space={5}>
+                  <Stack space={4} padding={2}>
                     <Navigation user={user} />
                     {children}
                     <Stack space={3}>
