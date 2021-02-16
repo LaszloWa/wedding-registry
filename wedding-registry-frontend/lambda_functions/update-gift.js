@@ -41,7 +41,10 @@ exports.handler = async (event, handler, callback) => {
     .set({
       isReserved: isReserved,
       reservedBy: isReserved
-        ? { _type: "reference", _ref: `person-${user.username.toLowerCase()}` }
+        ? {
+            _type: "reference",
+            _ref: `person_${user.username.split(" ").join("-").toLowerCase()}`,
+          }
         : { _type: "reference", _ref: "" },
       reservedAt: isReserved ? today : "",
     }) // Shallow merge
