@@ -1,3 +1,6 @@
+require("dotenv").config()
+const jwt = require("jsonwebtoken")
+const cookie = require("cookie")
 const sanityClient = require("@sanity/client")
 
 const client = sanityClient({
@@ -42,7 +45,7 @@ exports.handler = async (event) => {
 		}
 
     const personDocument = {
-      _id: `person-${username.toLowerCase()}`,
+      _id: `person_${username.split(" ").join("-").toLowerCase()}`,
       _type: "person",
       name: username,
     }
