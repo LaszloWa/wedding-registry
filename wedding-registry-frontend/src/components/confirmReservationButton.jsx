@@ -18,18 +18,18 @@ const StyledButton = styled(Button)`
   pointer-events: auto;
 
   &:not([data-disabled="true"]):hover {
-    --card-bg-color: #73896a;
-    --card-border-color: #73896a;
+    --card-bg-color: #6b8a55;
+    --card-border-color: #6b8a55;
     --card-fg-color: #fff;
   }
 
   &[data-confirm="true"] {
     --card-fg-color: #fff;
-    --card-bg-color: #73896a;
-    --card-border-color: #73896a;
+    --card-bg-color: #6b8a55;
+    --card-border-color: #6b8a55;
     &:not([data-disabled="true"]):hover {
-      --card-bg-color: #536348;
-      --card-border-color: #536348;
+      --card-bg-color: #5e794a;
+      --card-border-color: #5e794a;
     }
   }
 `
@@ -87,7 +87,7 @@ export const ConfirmReservationButton = ({
               <Card tone="caution" padding={4} radius={2} border>
                 <Flex align="center">
                   <Box paddingRight={4}>
-                    <Text style={{ color: "#73896a" }}>
+                    <Text style={{ color: "#6B8A55" }}>
                       <Icon symbol="warning-outline" />
                     </Text>
                   </Box>
