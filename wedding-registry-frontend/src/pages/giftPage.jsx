@@ -124,6 +124,13 @@ export const GiftPage = () => {
               />
             ))}
       </Grid>
+      {gifts.length === 0 && (
+        <Box padding={3} style={{ minHeight: "40vh" }}>
+          <Text size={1} muted align="center">
+            No gifts found...
+          </Text>
+        </Box>
+      )}
     </>
   )
 }

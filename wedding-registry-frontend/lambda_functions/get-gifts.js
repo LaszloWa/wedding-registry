@@ -13,7 +13,7 @@ const builder = imageUrlBuilder(client)
 
 const imageUrl = (source) => builder.image(source)
 
-const query = '*[_type == "gift"]'
+const query = '*[_type == "gift" && !isHidden]'
 
 exports.handler = async (event, handler, callback) => {
   console.log("Fetching all gifts!")

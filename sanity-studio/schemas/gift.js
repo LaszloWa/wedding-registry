@@ -4,6 +4,7 @@ export default {
   type: "document",
   liveEdit: true,
   fields: [
+    { title: "Hide on website", name: "isHidden", type: "boolean" },
     {
       title: "Name",
       name: "name",
@@ -76,5 +77,6 @@ export default {
   ],
   initialValue: {
     isReserved: false,
+    isHidden: true,
   },
 }
