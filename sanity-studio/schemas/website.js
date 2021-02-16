@@ -4,6 +4,11 @@ export default {
   name: "website",
   fields: [
     {
+      type: "string",
+      name: "title",
+      title: "Title",
+    },
+    {
       title: "Header image",
       type: "image",
       name: "headerImage",
