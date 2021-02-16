@@ -17,13 +17,13 @@ import styled from "styled-components"
 const StyledButton = styled(Button)`
   width: 100%;
   pointer-events: auto;
-  --card-bg-color: #73896a;
-  --card-border-color: #73896a;
+  --card-bg-color: #6b8a55;
+  --card-border-color: #6b8a55;
   --card-fg-color: #fff;
 
   &:not([data-disabled="true"]):hover {
-    --card-bg-color: #536348;
-    --card-border-color: #536348;
+    --card-bg-color: #5e794a;
+    --card-border-color: #5e794a;
     --card-fg-color: #fff;
   }
 `
@@ -55,7 +55,7 @@ export const LoginPage = () => {
   return (
     <Container style={{ maxWidth: "400px" }}>
       <Card height="fill">
-        <Stack space={5} padding={6}>
+        <Stack space={5} padding={[5, 5, 6]}>
           <Stack space={5} as="form" onSubmit={handleLogin}>
             <Stack space={3}>
               <Text weight="semibold" as="label" htmlFor="username">

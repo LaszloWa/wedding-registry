@@ -1,44 +1,31 @@
-import {
-  Flex,
-  Card,
-  Stack,
-  Dialog,
-  Grid,
-  Button,
-  Text,
-  Tooltip,
-  Box,
-} from "@sanity/ui"
+import { Stack, Dialog, Grid, Button, Text, Tooltip, Box } from "@sanity/ui"
 import React, { useState } from "react"
-import { Icon, HeartIcon } from "@sanity/icons"
+import { HeartIcon } from "@sanity/icons"
 import styled from "styled-components"
+import { Prompt } from "../components"
 
 const StyledButton = styled(Button)`
   width: 100%;
   pointer-events: auto;
 
   &:not([data-disabled="true"]):hover {
-    --card-bg-color: #73896a;
-    --card-border-color: #73896a;
+    --card-bg-color: #6b8a55;
+    --card-border-color: #6b8a55;
     --card-fg-color: #fff;
   }
 
   &[data-confirm="true"] {
     --card-fg-color: #fff;
-    --card-bg-color: #73896a;
-    --card-border-color: #73896a;
+    --card-bg-color: #6b8a55;
+    --card-border-color: #6b8a55;
     &:not([data-disabled="true"]):hover {
-      --card-bg-color: #536348;
-      --card-border-color: #536348;
+      --card-bg-color: #5e794a;
+      --card-border-color: #5e794a;
     }
   }
 `
 
-export const ConfirmReservationButton = ({
-  giftName,
-  isReserved,
-  onConfirm,
-}) => {
+export const ConfirmReservationButton = ({ gift, isReserved, onConfirm }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleCloseDialog = () => {
@@ -82,20 +69,14 @@ export const ConfirmReservationButton = ({
           <Box padding={4}>
             <Stack space={4}>
               <Text as="p">
-                Are you sure you want to reserve <strong>{giftName}</strong>?
+                Are you sure you want to reserve <strong>{gift?.name}</strong>{" "}
+                from <strong>{gift?.manufacturer}</strong>?
               </Text>
-              <Card tone="caution" padding={4} radius={2} border>
-                <Flex align="center">
-                  <Box paddingRight={4}>
-                    <Text style={{ color: "#73896a" }}>
-                      <Icon symbol="warning-outline" />
-                    </Text>
-                  </Box>
-                  <Text as="p">
-                    Reserved gifts will be unavailable to others.
-                  </Text>
-                </Flex>
-              </Card>
+              <Prompt
+                title="Reserved gifts will be unavailable to others."
+                tone="caution"
+                icon="warning-outline"
+              />
             </Stack>
           </Box>
         </Dialog>

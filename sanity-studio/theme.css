@@ -1,0 +1,27 @@
+:root {
+  --color-black: #121923;
+  --color-white: #fff;
+  /* Brand */
+  --brand-primary: #6b8a55;
+  --brand-primary--inverted: var(--color-white);
+  --brand-secondary: #55868a;
+  --brand-secondary--inverted: var(--color-white);
+
+  /* Focus */
+  --focus-color: #6a9599;
+  --input-box-shadow--focus: #6a9599;
+  --card-focus-ring-color: #6a9599;
+
+  /* State */
+  --state-success-color: #90a780;
+
+  /* Navbar */
+  --main-navigation-color: #536348;
+  --main-navigation-color--inverted: var(--color-white);
+
+  /* Buttons */
+  --default-button-primary-color: var(--brand-primary);
+  --default-button-primary-color--inverted: var(--color-white);
+  --default-button-success-color: var(--brand-primary);
+  --default-button-success-color--inverted: var(--color-white);
+}

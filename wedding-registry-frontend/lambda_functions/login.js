@@ -1,6 +1,14 @@
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
-const cookie = require("cookie");
+require("dotenv").config()
+const jwt = require("jsonwebtoken")
+const cookie = require("cookie")
+const sanityClient = require("@sanity/client")
+
+const client = sanityClient({
+  projectId: process.env.REACT_APP_SANITY_PROJECT_ID,
+  dataset: "production",
+  token: process.env.REACT_APP_SANITY_TOKEN, // or leave blank to be anonymous user
+  useCdn: false, // `false` if you want to ensure fresh data
+})
 
 const createJwtCookie = (username) => {
 	const secretKey =
@@ -35,6 +43,16 @@ exports.handler = async (event) => {
 			errorStatusCode = 401;
 			throw new Error(`Invalid password`);
 		}
+
+    const personDocument = {
+      _id: `person_${username.split(" ").join("-").toLowerCase()}`,
+      _type: "person",
+      name: username,
+    }
+
+    client.createIfNotExists(personDocument).then((res) => {
+      console.log("Welcome 🎉")
+    })
 
 		// 5. Create a JWT and serialize as a secure http-only cookie
 		const jwtCookie = createJwtCookie(username);

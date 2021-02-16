@@ -10,6 +10,8 @@ import {
   MenuButton,
   Menu,
   MenuItem,
+  Tooltip,
+  Inline,
 } from "@sanity/ui"
 import { LinkIcon } from "@sanity/icons"
 import styled from "styled-components"
@@ -19,12 +21,33 @@ const ImageWrapper = styled.div`
   display: flex;
   max-height: 230px;
   min-height: 230px;
+  min-width: 230px;
   overflow: hidden;
 `
 
 const Image = styled.img`
   width: 100%;
   object-fit: cover;
+  background: var(--card-border-color);
+  position: relative;
+
+  &:after {
+    content: "Image not found :(";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: ${({ theme }) => theme.sanity.color.muted.default.enabled.fg};
+    background-color: ${({ theme }) =>
+      theme.sanity.color.muted.default.enabled.bg};
+    font-size: ${({ theme }) =>
+      `${theme.sanity.fonts.text.sizes[1].fontSize}px`};
+  }
 `
 
 const Link = styled(Text)`
@@ -33,6 +56,8 @@ const Link = styled(Text)`
   display: flex;
   align-items: center;
 `
+
+const priceLabels = ["", "Low", "Medium", "High"]
 
 const StyledButton = styled(Button)`
   --card-fg-color: ${({ theme }) => theme.sanity.color.base.fg};
@@ -84,8 +109,8 @@ const GiftLink = ({ href, label, country }) => (
   </Link>
 )
 
-export const GiftItem = ({ gift, onClick }) => {
-  const { name, links, image, priceCategory } = gift
+export const GiftItem = ({ gift, onClick, children }) => {
+  const { name, links = [], image, priceCategory } = gift
   const [isReserved, setIsReserved] = useState(gift.isReserved || false)
   const price = (value) => {
     return new Array(value).fill("$").map((p) => p)
@@ -99,7 +124,7 @@ export const GiftItem = ({ gift, onClick }) => {
   }
 
   return (
-    <Card radius={2} border={1} margin={2}>
+    <Card radius={2} border={1}>
       <ImageWrapper>
         <Image src={image.src} alt={name} />
       </ImageWrapper>
@@ -126,28 +151,62 @@ export const GiftItem = ({ gift, onClick }) => {
                 }
                 menu={
                   <Menu>
-                    {links.map((link) => (
-                      <StyledMenuItem padding={0} key={link.label}>
-                        <Box padding={3}>
-                          <GiftLink {...link} />
-                        </Box>
-                      </StyledMenuItem>
-                    ))}
+                    <Box padding={3} paddingX={2}>
+                      <Stack space={2}>
+                        <Label size={1} muted>
+                          Stores
+                        </Label>
+
+                        {links.length > 0 ? (
+                          links.map((link) => (
+                            <StyledMenuItem padding={0} key={link.label}>
+                              <Box padding={3}>
+                                <GiftLink {...link} />
+                              </Box>
+                            </StyledMenuItem>
+                          ))
+                        ) : (
+                          <Box paddingY={2}>
+                            <Flex>
+                              <Text size={1} muted>
+                                No stores found...
+                              </Text>
+                            </Flex>
+                          </Box>
+                        )}
+                      </Stack>
+                    </Box>
                   </Menu>
                 }
               />
             </Flex>
           </Text>
-          <Text size={1} muted>
-            {price(priceCategory)}
-          </Text>
+
+          <Inline>
+            <Tooltip
+              portal
+              content={
+                <Box padding={3} style={{ maxWidth: "180px" }}>
+                  <Text size={1} muted>
+                    {priceLabels[priceCategory]} price
+                  </Text>
+                </Box>
+              }
+            >
+              <Text size={1} muted>
+                {price(priceCategory)}
+              </Text>
+            </Tooltip>
+          </Inline>
+
           <Flex>
             <ConfirmReservationButton
-              giftName={name}
+              gift={gift}
               onConfirm={handleConfirm}
               isReserved={isReserved}
             />
           </Flex>
+          {children}
         </Stack>
       </Box>
     </Card>

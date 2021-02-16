@@ -5,6 +5,7 @@ import createSchema from "part:@sanity/base/schema-creator"
 import schemaTypes from "all:part:@sanity/base/schema-type"
 import gift from "./gift"
 import website from "./website"
+import person from "./person"
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -16,5 +17,6 @@ export default createSchema({
     /* Your types here! */
     gift,
     website,
+    person,
   ]),
 })
