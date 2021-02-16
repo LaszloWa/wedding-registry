@@ -50,9 +50,14 @@ exports.handler = async (event) => {
       name: username,
     }
 
-    client.createIfNotExists(personDocument).then((res) => {
+    await client
+      .createIfNotExists(personDocument)
+      .then((res) => {
       console.log("Welcome 🎉")
     })
+      .catch((result) => {
+        console.log("something went wrong", result)
+      })
 
 		// 5. Create a JWT and serialize as a secure http-only cookie
 		const jwtCookie = createJwtCookie(username);

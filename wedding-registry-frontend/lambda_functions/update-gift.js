@@ -39,14 +39,12 @@ exports.handler = async (event, handler, callback) => {
     .patch(id) // Document ID to patch
     .ifRevisionId(revisionId)
     .set({
-      isReserved: isReserved,
-      reservedBy: isReserved
-        ? {
-            _type: "reference",
-            _ref: `person_${user.username.split(" ").join("-").toLowerCase()}`,
-          }
-        : { _type: "reference", _ref: "" },
-      reservedAt: isReserved ? today : "",
+      isReserved: true,
+      reservedBy: {
+        _type: "reference",
+        _ref: `person_${user.username.split(" ").join("-").toLowerCase()}`,
+      },
+      reservedAt: today,
     }) // Shallow merge
     .commit() // Perform the patch and return a promise
     .then((response) => {
