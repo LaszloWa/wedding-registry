@@ -31,7 +31,7 @@ const Image = styled.img`
   background: var(--card-border-color);
   position: relative;
 
-  &:after {
+  &::after {
     content: "Image not found :(";
     display: flex;
     align-items: center;
