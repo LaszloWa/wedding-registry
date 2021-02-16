@@ -16,7 +16,7 @@ import {
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.75em;
+  gap: 1em;
   overflow: hidden;
 `
 

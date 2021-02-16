@@ -84,7 +84,7 @@ const GiftLink = ({ href, label, country }) => (
   </Link>
 )
 
-export const GiftItem = ({ gift, onClick }) => {
+export const GiftItem = ({ gift, onClick, children }) => {
   const { name, links, image, priceCategory } = gift
   const [isReserved, setIsReserved] = useState(gift.isReserved || false)
   const price = (value) => {
@@ -99,7 +99,7 @@ export const GiftItem = ({ gift, onClick }) => {
   }
 
   return (
-    <Card radius={2} border={1} margin={2}>
+    <Card radius={2} border={1}>
       <ImageWrapper>
         <Image src={image.src} alt={name} />
       </ImageWrapper>
@@ -148,6 +148,7 @@ export const GiftItem = ({ gift, onClick }) => {
               isReserved={isReserved}
             />
           </Flex>
+          {children}
         </Stack>
       </Box>
     </Card>
