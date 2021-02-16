@@ -40,7 +40,9 @@ exports.handler = async (event, handler, callback) => {
     .ifRevisionId(revisionId)
     .set({
       isReserved: isReserved,
-      reservedBy: isReserved ? user.username : "",
+      reservedBy: isReserved
+        ? { _type: "reference", _ref: `person-${user.username.toLowerCase()}` }
+        : { _type: "reference", _ref: "" },
       reservedAt: isReserved ? today : "",
     }) // Shallow merge
     .commit() // Perform the patch and return a promise
