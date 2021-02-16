@@ -27,33 +27,37 @@ export const PersonPreview = ({ document }) => {
 
   useEffect(() => {
     setIsLoading(true)
-    client
-      .fetch(`*[_type == 'gift' && references($documentId)]`, {
-        documentId: person._id,
-      })
-      .then((data) => {
-        console.log(data)
-        setReservedGifts(data)
-        setIsLoading(false)
-      })
-      .catch((result) => {
-        setIsLoading(false)
-        toast.push({
-          title: "Oops! Something went wrong.",
-          description: result.response.body.error.description,
-          status: "error",
+    if (person) {
+      client
+        .fetch(`*[_type == 'gift' && references($documentId)]`, {
+          documentId: person._id,
         })
-      })
+        .then((data) => {
+          console.log(data)
+          setReservedGifts(data)
+          setIsLoading(false)
+        })
+        .catch((result) => {
+          setIsLoading(false)
+          toast.push({
+            title: "Oops! Something went wrong.",
+            description: result.response.body.error.description,
+            status: "error",
+          })
+        })
+    }
   }, [])
 
   return (
     <Stack space={4} padding={4}>
       <Stack space={3}>
         <Heading>Reserved gifts</Heading>
-        <Text>
-          {person.name} has reserved {reservedGifts.length}{" "}
-          {`${reservedGifts.length === 1 ? "gift" : "gifts"}`}
-        </Text>
+        {person?.name && (
+          <Text>
+            {person.name} has reserved {reservedGifts.length}{" "}
+            {`${reservedGifts.length === 1 ? "gift" : "gifts"}`}
+          </Text>
+        )}
       </Stack>
       <div
         style={{

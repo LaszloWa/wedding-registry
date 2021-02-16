@@ -85,7 +85,7 @@ const GiftLink = ({ href, label, country }) => (
 )
 
 export const GiftItem = ({ gift, onClick, children }) => {
-  const { name, links, image, priceCategory } = gift
+  const { name, links = [], image, priceCategory } = gift
   const [isReserved, setIsReserved] = useState(gift.isReserved || false)
   const price = (value) => {
     return new Array(value).fill("$").map((p) => p)
