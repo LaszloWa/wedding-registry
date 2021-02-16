@@ -19,12 +19,33 @@ const ImageWrapper = styled.div`
   display: flex;
   max-height: 230px;
   min-height: 230px;
+  min-width: 230px;
   overflow: hidden;
 `
 
 const Image = styled.img`
   width: 100%;
   object-fit: cover;
+  background: var(--card-border-color);
+  position: relative;
+
+  &:after {
+    content: "Image not found :(";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: ${({ theme }) => theme.sanity.color.muted.default.enabled.fg};
+    background-color: ${({ theme }) =>
+      theme.sanity.color.muted.default.enabled.bg};
+    font-size: ${({ theme }) =>
+      `${theme.sanity.fonts.text.sizes[1].fontSize}px`};
+  }
 `
 
 const Link = styled(Text)`
@@ -126,13 +147,31 @@ export const GiftItem = ({ gift, onClick, children }) => {
                 }
                 menu={
                   <Menu>
-                    {links.map((link) => (
-                      <StyledMenuItem padding={0} key={link.label}>
-                        <Box padding={3}>
-                          <GiftLink {...link} />
-                        </Box>
-                      </StyledMenuItem>
-                    ))}
+                    <Box padding={3} paddingX={2}>
+                      <Stack space={2}>
+                        <Label size={1} muted>
+                          Stores
+                        </Label>
+
+                        {links.length > 0 ? (
+                          links.map((link) => (
+                            <StyledMenuItem padding={0} key={link.label}>
+                              <Box padding={3}>
+                                <GiftLink {...link} />
+                              </Box>
+                            </StyledMenuItem>
+                          ))
+                        ) : (
+                          <Box paddingY={2}>
+                            <Flex>
+                              <Text size={1} muted>
+                                No stores found...
+                              </Text>
+                            </Flex>
+                          </Box>
+                        )}
+                      </Stack>
+                    </Box>
                   </Menu>
                 }
               />
