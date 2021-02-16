@@ -27,11 +27,6 @@ export default {
       },
     },
     {
-      title: "Link",
-      name: "link",
-      type: "string",
-    },
-    {
       title: "Links",
       type: "array",
       name: "links",
@@ -70,7 +65,8 @@ export default {
     {
       title: "Reserved by",
       name: "reservedBy",
-      type: "string",
+      type: "reference",
+      to: [{ type: "person" }],
     },
     {
       title: "Reserved at",
