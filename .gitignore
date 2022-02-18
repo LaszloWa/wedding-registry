@@ -19,6 +19,7 @@ build/
 *.env.test.local
 *.env.production.local
 wedding-registry-frontend/.eslintcache
+.vscode
 
 npm-debug.log*
 yarn-debug.log*
