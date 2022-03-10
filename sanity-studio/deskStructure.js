@@ -1,21 +1,21 @@
 import React from "react"
 import S from "@sanity/desk-tool/structure-builder"
-import { PersonPreview, GiftPreview, Icon } from "./components"
+import { /* PersonPreview, GiftPreview, */ Icon } from "./components"
 
 export const getDefaultDocumentNode = ({ schemaType }) => {
-  if (schemaType === "gift") {
-    return S.document().views([
-      S.view.form(),
-      S.view.component(GiftPreview).title("Preview"),
-    ])
-  }
+  // if (schemaType === "gift") {
+  //   return S.document().views([
+  //     S.view.form(),
+  //     S.view.component(GiftPreview).title("Preview"),
+  //   ])
+  // }
 
-  if (schemaType === "person") {
-    return S.document().views([
-      S.view.component(PersonPreview).title("Summary"),
-      S.view.form(),
-    ])
-  }
+  // if (schemaType === "person") {
+  //   return S.document().views([
+  //     S.view.component(PersonPreview).title("Summary"),
+  //     S.view.form(),
+  //   ])
+  // }
 
   return S.document().views([S.view.form()])
 }
@@ -27,7 +27,7 @@ export default () =>
       S.listItem()
         .title("Website")
         .icon(() => <Icon emoji="🌿" />)
-        .child(S.document().schemaType("website").documentId("websiteContent")),
+        .child(S.documentTypeList("page").title("Website")),
       S.listItem()
         .title("Gifts")
         .icon(() => <Icon emoji="🎁" />)
