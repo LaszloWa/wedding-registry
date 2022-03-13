@@ -1,0 +1,4 @@
+.netlify
+lambda_functions
+node_modules
+build
