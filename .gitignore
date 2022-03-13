@@ -30,3 +30,5 @@ yarn-error.log*
 
 # Studio
 sanity-studio/dist/
+# Local Netlify folder
+.netlify
