@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState } from "react";
 import sendRequest from "../api-helper";
+import { useContent } from "./content-provider";
 
 const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
 	const [user, setUser] = useState(undefined);
+	const { getContent, deleteContent } = useContent();
 
 	const saveUser = (user) => {
 		setUser(user);
@@ -12,10 +14,16 @@ function AuthProvider({ children }) {
 
 	const deleteUser = () => {
 		setUser(undefined);
+		deleteContent();
+	};
+
+	const handleSuccessfullLogin = (user) => {
+		saveUser(user);
+		getContent();
 	};
 
 	const login = (user, callback) =>
-		sendRequest("login", user, saveUser, callback);
+		sendRequest("login", user, handleSuccessfullLogin, callback);
 
 	const logout = () => sendRequest("logout", undefined, deleteUser);
 
