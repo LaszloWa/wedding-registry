@@ -46,6 +46,7 @@ export const GiftPage = () => {
         setGifts(data)
         setIsLoading(false)
       })
+      .catch((e) => setIsLoading(false))
   }, [])
 
   const sendResponseToast = (response) => {
@@ -69,43 +70,40 @@ export const GiftPage = () => {
   }
 
   return (
-    <>
+    <Stack space={4} paddingTop={4}>
       <Flex justify="center">
-        <Prompt
-          title="Please don't feel obliged to get us a gift, your presence at our wedding is more than enough."
-          margin={2}
-          tone="positive"
-        />
+        <Text>Text here</Text>
       </Flex>
       <Grid columns={[1, 1, 4]} gap={3}>
         <Flex align="center" justify={"center"} style={{ gridColumn: "1/-1" }}>
-          {isLoading ? (
+          {isLoading && (
             <Stack space={3} style={{ minHeight: "40vh" }} paddingTop={2}>
               <Flex justify="center">
-                <Spinner muted size={1} />
+                <Spinner muted />
               </Flex>
-              <Text size={1} muted align="center">
+              <Text muted align="center">
                 Loading gifts...
               </Text>
             </Stack>
-          ) : (
-            <Inline space={3}>
-              {priceRanges.map((price) => (
-                <Flex align="center" key={price.value}>
-                  <Box paddingRight={2}>
-                    <Radio
-                      value={price.value}
-                      name="price"
-                      checked={activePriceFilter === price.value}
-                      onChange={handleSelectPrice}
-                    />
-                  </Box>
-                  <Text size={1} muted>
-                    {price.label}
-                  </Text>
-                </Flex>
-              ))}
-            </Inline>
+          )}
+          {!isLoading && gifts.length !== 0 && (
+            <>
+              <Inline space={3}>
+                {priceRanges.map((price) => (
+                  <Flex align="center" key={price.value}>
+                    <Box paddingRight={2}>
+                      <Radio
+                        value={price.value}
+                        name="price"
+                        checked={activePriceFilter === price.value}
+                        onChange={handleSelectPrice}
+                      />
+                    </Box>
+                    <Text muted>{price.label}</Text>
+                  </Flex>
+                ))}
+              </Inline>
+            </>
           )}
         </Flex>
         {!isLoading &&
@@ -125,12 +123,12 @@ export const GiftPage = () => {
             ))}
       </Grid>
       {gifts.length === 0 && (
-        <Box padding={3} style={{ minHeight: "40vh" }}>
-          <Text size={1} muted align="center">
+        <Box padding={5} style={{ minHeight: "40vh" }}>
+          <Text muted align="center">
             No gifts found...
           </Text>
         </Box>
       )}
-    </>
+    </Stack>
   )
 }

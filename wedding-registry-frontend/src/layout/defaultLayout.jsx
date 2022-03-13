@@ -12,7 +12,7 @@ import {
 import { weddingTheme } from "../theme"
 import { Navigation } from "./navigation"
 import { BrowserRouter as Router, Switch } from "react-router-dom"
-import { createGlobalStyle } from "styled-components"
+import styled, { createGlobalStyle } from "styled-components"
 import { LeaveIcon } from "@sanity/icons"
 import { useAuth } from "../providers/auth-provider"
 
@@ -28,7 +28,14 @@ const GlobalStyle = createGlobalStyle`
 *::after {
     box-sizing: inherit;
 }
+`
 
+const BackgroundImage = styled.img`
+  position: absolute;
+  bottom: -20px;
+  width: calc(100% - 2px);
+  object-fit: cover;
+  min-height: 200px;
 `
 
 export const DefaultLayout = ({ user, children }) => {
@@ -37,6 +44,7 @@ export const DefaultLayout = ({ user, children }) => {
   return (
     <>
       <GlobalStyle />
+      <BackgroundImage src="/background.png" />
       <ThemeProvider theme={weddingTheme}>
         <ToastProvider>
           <Router>
@@ -44,11 +52,18 @@ export const DefaultLayout = ({ user, children }) => {
               <Card
                 paddingBottom={4}
                 style={{ minHeight: "100vh", width: "100%" }}
+                height="fill"
               >
-                <Container>
+                <Container height="fill">
                   <Stack space={4} padding={2}>
-                    <Navigation user={user} />
-                    {children}
+                    {user && (
+                      <Flex justify="center">
+                        <Navigation user={user} />
+                      </Flex>
+                    )}
+                    <Flex justify="center" height="fill">
+                      {children}
+                    </Flex>
                     <Stack space={3}>
                       {user && (
                         <Flex justify="center">
@@ -60,8 +75,8 @@ export const DefaultLayout = ({ user, children }) => {
                           />
                         </Flex>
                       )}
-                      <Text muted size={1} style={{ textAlign: "center" }}>
-                        Questions or problems? Get in touch with us!
+                      <Text muted size={2} style={{ textAlign: "center" }}>
+                        Having issues? Please reach out to us :)
                       </Text>
                     </Stack>
                   </Stack>
