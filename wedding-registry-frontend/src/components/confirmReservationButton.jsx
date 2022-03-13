@@ -1,45 +1,45 @@
-import { Stack, Dialog, Grid, Button, Text, Tooltip, Box } from "@sanity/ui"
-import React, { useState } from "react"
-import { HeartIcon } from "@sanity/icons"
-import styled from "styled-components"
-import { Prompt } from "../components"
+import { Stack, Dialog, Grid, Button, Text, Tooltip, Box } from '@sanity/ui';
+import React, { useState } from 'react';
+import { HeartIcon } from '@sanity/icons';
+import styled from 'styled-components';
+import { Prompt } from '../components';
 
 const StyledButton = styled(Button)`
   width: 100%;
   pointer-events: auto;
 
-  &:not([data-disabled="true"]):hover {
+  &:not([data-disabled='true']):hover {
     --card-bg-color: #6b8a55;
     --card-border-color: #6b8a55;
     --card-fg-color: #fff;
   }
 
-  &[data-confirm="true"] {
+  &[data-confirm='true'] {
     --card-fg-color: #fff;
     --card-bg-color: #6b8a55;
     --card-border-color: #6b8a55;
-    &:not([data-disabled="true"]):hover {
+    &:not([data-disabled='true']):hover {
       --card-bg-color: #5e794a;
       --card-border-color: #5e794a;
     }
   }
-`
+`;
 
 export const ConfirmReservationButton = ({ gift, isReserved, onConfirm }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleCloseDialog = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
   const handleOpenDialog = () => {
-    setIsOpen(true)
-  }
+    setIsOpen(true);
+  };
 
   const handleConfirm = () => {
-    onConfirm()
-    handleCloseDialog()
-  }
+    onConfirm();
+    handleCloseDialog();
+  };
 
   return (
     <>
@@ -69,7 +69,7 @@ export const ConfirmReservationButton = ({ gift, isReserved, onConfirm }) => {
           <Box padding={4}>
             <Stack space={4}>
               <Text as="p">
-                Are you sure you want to reserve <strong>{gift?.name}</strong>{" "}
+                Are you sure you want to reserve <strong>{gift?.name}</strong>{' '}
                 from <strong>{gift?.manufacturer}</strong>?
               </Text>
               <Prompt
@@ -84,18 +84,18 @@ export const ConfirmReservationButton = ({ gift, isReserved, onConfirm }) => {
       <Tooltip
         disabled={!isReserved}
         content={
-          <Box padding={3} style={{ maxWidth: "230px" }}>
+          <Box padding={3} style={{ maxWidth: '230px' }}>
             <Text size={1} muted>
               This gift has already been reserved.
             </Text>
           </Box>
         }
       >
-        <div style={{ width: "100%" }}>
+        <div style={{ width: '100%' }}>
           <StyledButton
             tone="brand"
             mode="ghost"
-            text={isReserved ? "Reserved" : "Reserve"}
+            text={isReserved ? 'Reserved' : 'Reserve'}
             icon={HeartIcon}
             onClick={handleOpenDialog}
             disabled={isReserved}
@@ -103,5 +103,5 @@ export const ConfirmReservationButton = ({ gift, isReserved, onConfirm }) => {
         </div>
       </Tooltip>
     </>
-  )
-}
+  );
+};

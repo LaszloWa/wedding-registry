@@ -1,6 +1,6 @@
-import React from "react"
-import { Box } from "@sanity/ui"
+import React from 'react';
+import { Box } from '@sanity/ui';
 
 export const LandingPage = () => {
-  return <Box>Landing page</Box>
-}
+  return <Box>Landing page</Box>;
+};

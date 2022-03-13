@@ -1,16 +1,16 @@
-import { studioTheme, ThemeFont } from "@sanity/ui"
+import { studioTheme } from '@sanity/ui';
 
-const headingFont: ThemeFont = {
+const headingFont = {
   ...studioTheme.fonts.heading,
-  fontFamily: "Cormorant Garamond",
-  family: "Cormorant Garamond, serif",
-}
+  fontFamily: 'Cormorant Garamond',
+  family: 'Cormorant Garamond, serif',
+};
 
-const textFont: ThemeFont = {
+const textFont = {
   ...studioTheme.fonts.text,
-  fontFamily: "Cormorant Garamond",
-  family: "Cormorant Garamond, serif",
-}
+  fontFamily: 'Cormorant Garamond',
+  family: 'Cormorant Garamond, serif',
+};
 
 export const weddingTheme = {
   ...studioTheme,
@@ -19,4 +19,4 @@ export const weddingTheme = {
     text: textFont,
     heading: headingFont,
   },
-}
+};

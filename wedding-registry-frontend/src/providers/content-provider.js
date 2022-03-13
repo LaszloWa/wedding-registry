@@ -1,24 +1,24 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
 const ContentContext = createContext({});
 
-function ContentProvider({ children }) {
-	const [content, setContent] = useState(undefined);
+function ContentProvider(children) {
+  const [content, setContent] = useState(undefined);
 
-	const getContent = (content) =>
-		fetch("/.netlify/functions/get-editorial-content")
-			.then((res) => res.json())
-			.then((data) => {
-				setContent(data);
-			});
+  const getContent = () =>
+    fetch('/.netlify/functions/get-editorial-content')
+      .then(res => res.json())
+      .then(data => {
+        setContent(data);
+      });
 
-	const deleteContent = () => setContent(undefined);
+  const deleteContent = () => setContent(undefined);
 
-	return (
-		<ContentContext.Provider value={{ content, getContent, deleteContent }}>
-			{children}
-		</ContentContext.Provider>
-	);
+  return (
+    <ContentContext.Provider value={{ content, getContent, deleteContent }}>
+      {children}
+    </ContentContext.Provider>
+  );
 }
 
 const useContent = () => useContext(ContentContext);
