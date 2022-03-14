@@ -4,11 +4,8 @@
     # directory if one has been set, or the root directory if 
     # a base has not been set. This sample publishes the directory 
     # located at the absolute path "root/project/build-output"
-[context.production]
- publish = "public"
 
-[context.deploy-preview]
-    publish = "public"
+    publish = "public/"
 
 # The following redirect is intended for use with most SPAs 
 # that handle routing internally.
