@@ -2,4 +2,3 @@
 .netlify
 public/dist
 node_modules
-netlify.toml
