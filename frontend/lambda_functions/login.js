@@ -18,7 +18,7 @@ const createJwtCookie = (username) => {
 
 	const token = jwt.sign({ username }, secretKey, {
 		algorithm: "RS256",
-		expiresIn: "7 days",
+		expiresIn: "30 days",
 	});
 
 	const jwtCookie = cookie.serialize("jwt", token, {

@@ -1,4 +1,4 @@
 # Local Netlify folder
 .netlify
-.eslintcache
-.env
+public/dist
+node_modules
