@@ -13,5 +13,8 @@ node_modules/
 
 # Studio
 sanity-studio/dist/
+
+frontend/public/dist/
+
 # Local Netlify folder
 .netlify
