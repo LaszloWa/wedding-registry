@@ -1,5 +1,5 @@
-const cookie = require("cookie");
-const jwt = require("jsonwebtoken");
+import { verify } from "jsonwebtoken";
+import { parse } from "cookie";
 
 const publicKey = `-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAzzyleFzgQJhO3Q2LEv2U
@@ -17,7 +17,7 @@ rMbu85U1AAG5hPO3ufAWep3Ys9SzAMEoXKEl5wDF4APUpkUazXg3B5ti43TYrCLN
 -----END PUBLIC KEY-----`;
 
 exports.handler = async (event) => {
-	const cookies = event.headers.cookie && cookie.parse(event.headers.cookie);
+	const cookies = event.headers.cookie && parse(event.headers.cookie);
 
 	if (!cookies || !cookies.jwt) {
 		return {
@@ -34,7 +34,7 @@ exports.handler = async (event) => {
 		// where our expiry information is.
 		// If the token is successfully verified,
 		// it returns the payload.
-		const payload = jwt.verify(cookies.jwt, publicKey);
+		const payload = verify(cookies.jwt, publicKey);
 
 		return {
 			statusCode: 200,

@@ -2,6 +2,7 @@
 	"name": "esbuild-wedding-registry-frontend",
 	"version": "0.2.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "npm run clean && node ./build/build",
@@ -31,7 +32,6 @@
 	},
 	"devDependencies": {
 		"express": "^4.17.3",
-		"netlify-cli": "^9.13.2",
 		"nodemon": "^2.0.15",
 		"path": "^0.12.7"
 	}
