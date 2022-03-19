@@ -1,11 +1,12 @@
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
-const cookie = require("cookie");
-const sanityClient = require("@sanity/client");
+import "dotenv/config";
+import sanityClient from "@sanity/client";
+import { sign } from "jsonwebtoken";
+import { serialize } from "cookie";
 
 const client = sanityClient({
 	projectId: process.env.REACT_APP_SANITY_PROJECT_ID,
 	dataset: "production",
+	apiVersion: "2022-03-18",
 	token: process.env.REACT_APP_SANITY_TOKEN, // or leave blank to be anonymous user
 	useCdn: false, // `false` if you want to ensure fresh data
 });
@@ -16,12 +17,12 @@ const createJwtCookie = (username) => {
 		process.env.JWT_SECRET_KEY +
 		"\n-----END RSA PRIVATE KEY-----";
 
-	const token = jwt.sign({ username }, secretKey, {
+	const token = sign({ username }, secretKey, {
 		algorithm: "RS256",
 		expiresIn: "30 days",
 	});
 
-	const jwtCookie = cookie.serialize("jwt", token, {
+	const jwtCookie = serialize("jwt", token, {
 		secure: process.env.NETLIFY_DEV !== "true",
 		httpOnly: true,
 		path: "/",

@@ -1,5 +1,5 @@
-const esbuild = require("esbuild");
-const fsp = require("fs").promises;
+import esbuild from "esbuild";
+import { promises as fsp } from "fs";
 
 const build = () =>
 	esbuild.build({
