@@ -5,7 +5,7 @@ const build = () =>
 	esbuild.build({
 		entryPoints: ["./src/index.jsx"],
 		bundle: true,
-		minify: false,
+		minify: true,
 		outdir: "./public/dist",
 		plugins: [],
 		loader: { ".css": "file", ".js": "jsx" },
