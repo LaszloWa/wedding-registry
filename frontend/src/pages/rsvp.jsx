@@ -1,79 +1,168 @@
-import React, { useState } from "react";
-import { Box, Button, Checkbox, TextInput } from "@sanity/ui";
-import sendRequest from "../api-helper";
+import React, { useState } from "react"
+import {
+  Box,
+  Button,
+  Checkbox,
+  TextInput,
+  Stack,
+  Text,
+  Grid,
+  Inline,
+  Flex,
+  Card,
+  useToast,
+} from "@sanity/ui"
+import sendRequest from "../api-helper"
+import { AccentImage, PortableTextContent } from "../components"
+import { useContent } from "../providers/content-provider"
+import styled from "styled-components"
+
+const StyledButton = styled(Button)`
+  --card-bg-color: #719269;
+	@media (hover: hover) {
+		&:not([data-disabled='true']):hover {
+			--card-bg-color: #506e3a;
+			}
+		}	
+  }
+`
+
+const dietaryRestrictions = [
+  {
+    title: "Lactose intolerant",
+    value: "lactose-free",
+  },
+  {
+    title: "Celiac disease",
+    value: "gluten-free",
+  },
+  {
+    title: "Vegan",
+    value: "vegan",
+  },
+  {
+    title: "Vegetarian",
+    value: "vegetarian",
+  },
+  {
+    title: "Nut allergy",
+    value: "nut-allergy",
+  },
+  {
+    title: "Other (please contact us)",
+    value: "other",
+  },
+]
 
 export const Rsvp = () => {
-	const [message, setMessage] = useState(undefined);
+  const [loading, setLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const { content } = useContent()
+  const toast = useToast()
 
-	const handleFormSubmission = (event) => {
-		event.preventDefault();
+  const handleFormSubmission = async (event) => {
+    event.preventDefault()
+    setLoading(true)
 
-		const theElements = event.target.elements;
-		console.log("the event", theElements);
+    const theElements = event.target.elements
 
-		const dietaryRestrictions = Array.from(theElements["dietaryRestrictions[]"])
-			.map((item) => {
-				if (item.checked) {
-					return item.value;
-				}
-			})
-			.filter((item) => item);
+    const dietaryRestrictions = Array.from(theElements["dietaryRestrictions[]"])
+      .map((item) => {
+        if (item.checked) {
+          return item.value
+        }
+      })
+      .filter((item) => item)
 
-		const body = {
-			name: theElements["name"].value,
-			guest: theElements["guest"].value,
-			dietaryRestrictions,
-		};
+    const body = {
+      name: theElements["name"].value,
+      guest: theElements["guest"].value,
+      dietaryRestrictions,
+    }
 
-		sendRequest(
-			"rsvp",
-			body,
-			setMessage("Awesome, looking forward to celebrating with you!"),
-			setMessage(
-				"Something went wrong, please try again or contact us directly.",
-			),
-		);
-	};
+    await sendRequest("rsvp", body, toast)
+    setLoading(false)
+  }
 
-	return (
-		<div>
-			<Box>RSVP content</Box>
-			{message && <div>{message}</div>}
-			<form onSubmit={handleFormSubmission}>
-				<TextInput label="Your name" id="name" required />
-				<TextInput label="Your +1" id="guest" />
-				<Checkbox
-					label="Lactose intolerant"
-					name="dietaryRestrictions[]"
-					value="lactose-free"
-					id="lactose-free"
-				/>
-				<Checkbox
-					label="Celiac disease"
-					name="dietaryRestrictions[]"
-					value="gluten-free"
-					id="gluten-free"
-				/>
-				<Checkbox
-					label="Vegan"
-					name="dietaryRestrictions[]"
-					value="vegan"
-					id="vegan"
-				/>
-				<Checkbox
-					label="Nut allergy"
-					name="dietaryRestrictions[]"
-					value="nut-allergy"
-					id="nut-allergy"
-				/>
-				<Checkbox
-					label="Other (please contact us)"
-					name="dietaryRestrictions[]"
-					value="other"
-					id="other"
-				/>
-				<Button type="submit">Submit</Button>
-			</form>
-		</div>
-	);
-};
+  return (
+    <>
+      <AccentImage src={content?.rsvp.image.src} />
+      {content?.rsvp?.content && (
+        <PortableTextContent value={content?.rsvp?.content} />
+      )}
+
+      <Flex justify="center" paddingTop={4}>
+        <Stack
+          space={4}
+          as="form"
+          onSubmit={handleFormSubmission}
+          style={{ textAlign: "left", maxWidth: 450 }}
+          flex={1}
+        >
+          <Stack space={3}>
+            <Text as="label" weight="medium" size={[2, 2, 3]}>
+              Name*
+            </Text>
+            <Text size={2} muted>
+              Your first name
+            </Text>
+            <TextInput
+              label="Your name"
+              id="name"
+              fontSize={[2, 2, 3]}
+              disabled={loading}
+            />
+          </Stack>
+          <Stack space={3}>
+            <Text as="label" weight="medium" size={[2, 2, 3]}>
+              Accompanied by
+            </Text>
+            <Text size={2} muted>
+              Name of your partner or +1
+            </Text>
+            <TextInput
+              label="Your +1"
+              id="guest"
+              fontSize={[2, 2, 3]}
+              disabled={loading}
+            />
+          </Stack>
+
+          <Stack space={3}>
+            <Text as="label" weight="medium" size={[2, 2, 3]}>
+              Dietary restrictions
+            </Text>
+            <Text size={2} muted>
+              Let us know if there is any food you cannot eat and we will make
+              the proper arrangements if necessary!
+            </Text>
+            <Grid columns={[1, 1, 2]} gap={3}>
+              {dietaryRestrictions.map((option, i) => (
+                <Inline as="label" space={2} key={i}>
+                  <Checkbox
+                    label={option.title}
+                    name="dietaryRestrictions[]"
+                    value={option.value}
+                    id={option.value}
+                    fontSize={[2, 2, 3]}
+                    disabled={loading}
+                  />
+                  <Text size={[2, 2, 3]}>{option.title}</Text>
+                </Inline>
+              ))}
+            </Grid>
+          </Stack>
+          <Stack marginTop={2} space={3}>
+            <StyledButton
+              type="submit"
+              text="Submit"
+              fontSize={[2, 2, 3]}
+              disabled={loading}
+              loading={loading}
+            />
+          </Stack>
+        </Stack>
+      </Flex>
+    </>
+  )
+}
