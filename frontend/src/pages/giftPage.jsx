@@ -11,14 +11,8 @@ import {
   Inline,
   useToast,
   Spinner,
+  Grid,
 } from "@sanity/ui"
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1em;
-  overflow: hidden;
-`
 
 const priceRanges = [
   { label: "All gifts", value: "all" },
@@ -43,7 +37,7 @@ export const GiftPage = () => {
     fetch("/.netlify/functions/get-gifts")
       .then((res) => res.json())
       .then((data) => {
-        setGifts(data)
+        setGifts(data.filter((g) => g.name !== "Honeymoon Fund"))
         setIsLoading(false)
       })
       .catch((e) => setIsLoading(false))
@@ -61,20 +55,12 @@ export const GiftPage = () => {
       isReserved,
     }
 
-    sendRequest(
-      "update-gift",
-      requestBody,
-      sendResponseToast,
-      sendResponseToast
-    )
+    sendRequest("update-gift", requestBody)
   }
 
   return (
-    <Stack space={4} paddingTop={4}>
-      <Flex justify="center">
-        <Text>Text here</Text>
-      </Flex>
-      <Grid columns={[1, 1, 4]} gap={3}>
+    <>
+      <Grid columns={[2, 2, 4]} gap={4}>
         <Flex align="center" justify={"center"} style={{ gridColumn: "1/-1" }}>
           {isLoading && (
             <Stack space={3} style={{ minHeight: "40vh" }} paddingTop={2}>
@@ -87,7 +73,7 @@ export const GiftPage = () => {
             </Stack>
           )}
           {!isLoading && gifts.length !== 0 && (
-            <>
+            <Box paddingY={[2, 2, 4]}>
               <Inline space={3}>
                 {priceRanges.map((price) => (
                   <Flex align="center" key={price.value}>
@@ -103,7 +89,7 @@ export const GiftPage = () => {
                   </Flex>
                 ))}
               </Inline>
-            </>
+            </Box>
           )}
         </Flex>
         {!isLoading &&
@@ -122,13 +108,13 @@ export const GiftPage = () => {
               />
             ))}
       </Grid>
-      {gifts.length === 0 && (
+      {gifts.length === 0 && !isLoading && (
         <Box padding={5} style={{ minHeight: "40vh" }}>
           <Text muted align="center">
             No gifts found...
           </Text>
         </Box>
       )}
-    </Stack>
+    </>
   )
 }

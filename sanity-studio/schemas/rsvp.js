@@ -23,6 +23,7 @@ export default {
           { title: "Lactose intolerant", value: "lactose-free" },
           { title: "Celiac disease", value: "gluten-free" },
           { title: "Vegan", value: "vegan" },
+          { title: "Vegetarian", value: "vegetarian" },
           { title: "Nut allergy", value: "nut-allergy" },
           { title: "Other (please contact us)", value: "other" },
         ],
