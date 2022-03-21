@@ -1,3 +1,4 @@
+import React from "react"
 import { Flex, Card, Text, Box } from "@sanity/ui"
 import { Icon } from "@sanity/icons"
 import styled from "styled-components"
@@ -19,12 +20,12 @@ export const Prompt = ({ tone = "default", title, icon, margin = 0 }) => (
     <Flex align="center">
       <Box paddingRight={icon ? 4 : 0}>
         {icon && (
-          <Text>
+          <Text size={2}>
             <Icon symbol={icon} />
           </Text>
         )}
       </Box>
-      <Text as="p" size={1}>
+      <Text as="p" size={2}>
         {title}
       </Text>
     </Flex>

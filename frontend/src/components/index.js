@@ -1,3 +1,5 @@
 export * from "./giftItem"
 export * from "./confirmReservationButton"
 export * from "./prompt"
+export * from "./portableTextContent"
+export * from "./accentImage"

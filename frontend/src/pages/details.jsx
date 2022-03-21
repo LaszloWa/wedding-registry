@@ -1,6 +1,14 @@
 import React from "react"
-import { Box } from "@sanity/ui"
+import { Stack } from "@sanity/ui"
+import { useContent } from "../providers/content-provider"
+import { PortableTextContent, AccentImage } from "../components"
 
 export const Details = () => {
-  return <Box>Details content</Box>
+  const { content } = useContent()
+  return (
+    <>
+      <AccentImage src={content?.details.image.src} />
+      <PortableTextContent value={content?.details?.content} />
+    </>
+  )
 }
