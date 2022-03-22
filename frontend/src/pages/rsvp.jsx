@@ -108,6 +108,7 @@ export const Rsvp = () => {
               id="name"
               fontSize={[2, 2, 3]}
               disabled={loading}
+              required
             />
           </Stack>
           <Stack space={3}>
