@@ -49,6 +49,7 @@ const BackgroundImage = styled.img`
   width: 100%;
   object-fit: cover;
   min-height: 150px;
+  max-height: 150px;
   left: 0;
   z-index: 1;
 `
