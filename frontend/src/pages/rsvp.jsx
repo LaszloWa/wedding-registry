@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import {
-  Box,
   Button,
   Checkbox,
   TextInput,
@@ -9,7 +8,6 @@ import {
   Grid,
   Inline,
   Flex,
-  Card,
   useToast,
 } from "@sanity/ui"
 import sendRequest from "../api-helper"
@@ -19,11 +17,10 @@ import styled from "styled-components"
 
 const StyledButton = styled(Button)`
   --card-bg-color: #719269;
-	@media (hover: hover) {
-		&:not([data-disabled='true']):hover {
-			--card-bg-color: #506e3a;
-			}
-		}	
+  @media (hover: hover) {
+    &:not([data-disabled="true"]):hover {
+      --card-bg-color: #506e3a;
+    }
   }
 `
 
@@ -86,7 +83,7 @@ export const Rsvp = () => {
 
   return (
     <>
-      <AccentImage src={content?.rsvp.image.src} />
+      <AccentImage src="/accent.png" />
       {content?.rsvp?.content && (
         <PortableTextContent value={content?.rsvp?.content} />
       )}
@@ -133,8 +130,7 @@ export const Rsvp = () => {
               Dietary restrictions
             </Text>
             <Text size={2} muted>
-              Let us know if there is any food you cannot eat and we will make
-              the proper arrangements if necessary!
+              Let us know if there is any food you cannot eat
             </Text>
             <Grid columns={[1, 1, 2]} gap={3}>
               {dietaryRestrictions.map((option, i) => (

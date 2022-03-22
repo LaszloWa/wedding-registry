@@ -2,15 +2,11 @@ import { Flex, Box } from "@sanity/ui"
 import React from "react"
 import styled from "styled-components"
 
-const Image = styled.img`
-  width: 4.5em;
-`
-
-export const AccentImage = ({ src }) => {
+export const AccentImage = ({ src, width = "4.5em" }) => {
   return (
-    <Flex justify="center">
+    <Flex justify="center" style={{ minHeight: 120 }}>
       <Box padding={[2, 2, 3]}>
-        <Image src={src} />
+        <img src={src} style={{ width: width }} />
       </Box>
     </Flex>
   )

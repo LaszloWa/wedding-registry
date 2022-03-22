@@ -30,7 +30,7 @@ const components = {
 
 export const PortableTextContent = ({ value }) => {
   return (
-    <Stack space={4} style={{ maxWidth: 550, margin: "auto" }}>
+    <Stack space={[3, 3, 4]} style={{ maxWidth: 550, margin: "auto" }}>
       <PortableText value={value} components={components} />
     </Stack>
   )
