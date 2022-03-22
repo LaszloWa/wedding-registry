@@ -72,7 +72,7 @@ export const GiftItem = ({ gift, onClick, children, isHoneymoonFund }) => {
           <Image src={image.src} alt={name} />
         </ImageWrapper>
       </Flex>
-      <Box padding={3} paddingTop={2}>
+      <Box padding={[0, 0, 3]} paddingTop={2}>
         <Stack space={3} style={{ maxWidth: 200, margin: "auto" }}>
           <Text size={2} muted>
             {price(priceCategory)}

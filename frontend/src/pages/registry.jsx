@@ -8,7 +8,7 @@ export const Registry = () => {
   const { content } = useContent()
   return (
     <>
-      <AccentImage src={content?.registry.image.src} />
+      <AccentImage src="/accent.png" />
       {content?.registry?.content && (
         <PortableTextContent value={content?.registry?.content} />
       )}

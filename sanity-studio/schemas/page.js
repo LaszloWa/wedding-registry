@@ -12,11 +12,7 @@ export default {
       name: "image",
       title: "Image",
       type: "image",
-    },
-    {
-      name: "order",
-      title: "Order",
-      type: "number",
+      hidden: true,
     },
     {
       name: "slug",

@@ -1,4 +1,4 @@
-import { GiftItem, Prompt } from "../components"
+import { GiftItem } from "../components"
 import React, { useEffect, useState } from "react"
 import sendRequest from "../api-helper"
 import styled from "styled-components"
