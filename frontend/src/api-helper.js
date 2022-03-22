@@ -36,7 +36,6 @@ async function sendRequest(endpoint, body, callback) {
   }
 
   if (response.ok) {
-    console.log(response)
     switch (endpoint) {
       case "update-gift":
         return callback.push({
