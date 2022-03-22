@@ -51,7 +51,7 @@ const Image = styled.img`
   }
 `
 
-export const GiftItem = ({ gift, onClick, children }) => {
+export const GiftItem = ({ gift, onClick, children, isHoneymoonFund }) => {
   const { name, links = [], image, priceCategory, manufacturer } = gift
   const [isReserved, setIsReserved] = useState(gift.isReserved || false)
   const price = (value) => {
@@ -73,20 +73,20 @@ export const GiftItem = ({ gift, onClick, children }) => {
         </ImageWrapper>
       </Flex>
       <Box padding={3} paddingTop={2}>
-        <Stack space={2}>
+        <Stack space={3} style={{ maxWidth: 200, margin: "auto" }}>
+          <Text size={2} muted>
+            {price(priceCategory)}
+          </Text>
           <Text size={[2, 2, 3]}>
             {manufacturer ? `${manufacturer} - ` : ""}
             {name}
           </Text>
-          <Text size={1} muted>
-            {price(priceCategory)}
-          </Text>
-
           <Flex>
             <ConfirmReservationButton
               gift={gift}
               onConfirm={handleConfirm}
               isReserved={isReserved}
+              isHoneymoonFund={isHoneymoonFund}
             />
           </Flex>
           {children}
