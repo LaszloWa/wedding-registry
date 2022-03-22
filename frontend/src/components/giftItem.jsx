@@ -19,8 +19,8 @@ import { ConfirmReservationButton } from "./confirmReservationButton"
 
 const ImageWrapper = styled.div`
   display: flex;
-  height: 120px;
-  width: 120px;
+  height: 150px;
+  width: 150px;
   overflow: hidden;
   border-radius: 50%;
   flex-shrink: 0;
