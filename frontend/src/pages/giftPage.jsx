@@ -26,6 +26,10 @@ export const GiftPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [activePriceFilter, setActivePriceFilter] = useState("all") // all, 1, 2, 3
 
+  const honeymoonFund = gifts?.find(
+    (g) => g.name === "Donation to Honeymoon Fund"
+  )
+
   const handleSelectPrice = (e) => {
     setActivePriceFilter(e.target.value)
   }
@@ -37,7 +41,7 @@ export const GiftPage = () => {
     fetch("/.netlify/functions/get-gifts")
       .then((res) => res.json())
       .then((data) => {
-        setGifts(data.filter((g) => g.name !== "Honeymoon Fund"))
+        setGifts(data)
         setIsLoading(false)
       })
       .catch((e) => setIsLoading(false))
@@ -60,7 +64,7 @@ export const GiftPage = () => {
 
   return (
     <>
-      <Grid columns={[2, 2, 4]} gap={4}>
+      <Grid columns={[2, 2, 3]} gap={4} paddingY={2}>
         <Flex align="center" justify={"center"} style={{ gridColumn: "1/-1" }}>
           {isLoading && (
             <Stack space={3} style={{ minHeight: "40vh" }} paddingTop={2}>
@@ -92,6 +96,13 @@ export const GiftPage = () => {
             </Box>
           )}
         </Flex>
+        {!isLoading && honeymoonFund && (
+          <GiftItem
+            key={honeymoonFund._id}
+            gift={honeymoonFund}
+            isHoneymoonFund
+          />
+        )}
         {!isLoading &&
           gifts
             .filter((gift) => {
@@ -100,6 +111,7 @@ export const GiftPage = () => {
                 gift.priceCategory === +activePriceFilter
               )
             })
+            .filter((g) => g.name !== "Donation to Honeymoon Fund")
             .map((gift) => (
               <GiftItem
                 key={gift._id}
