@@ -41,7 +41,7 @@ export const GiftPage = () => {
     fetch("/.netlify/functions/get-gifts")
       .then((res) => res.json())
       .then((data) => {
-        setGifts(data)
+        setGifts(data.filter((g) => !g.isReserved))
         setIsLoading(false)
       })
       .catch((e) => setIsLoading(false))
