@@ -15,7 +15,7 @@ export default {
     },
     {
       name: "dietaryRestrictions",
-      title: "dietaryRestrictions",
+      title: "Dietary restrictions",
       type: "array",
       of: [{ type: "string" }],
       options: {
@@ -28,6 +28,11 @@ export default {
           { title: "Other (please contact us)", value: "other" },
         ],
       },
+    },
+    {
+      name: "notes",
+      title: "Notes",
+      type: "text",
     },
   ],
 }
