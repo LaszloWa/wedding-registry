@@ -13,6 +13,7 @@ node_modules/
 
 # Studio
 sanity-studio/dist/
+sanity-studio/.sanity/
 
 frontend/public/dist/
 
