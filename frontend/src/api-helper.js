@@ -30,7 +30,7 @@ async function sendRequest(endpoint, body, callback) {
 				});
 			default:
 				console.log("I am firing here");
-				console.log("the response body", response.body);
+				console.log("the response body", await response.text());
 				console.log("the response body await", await response.body);
 				return callback.push({
 					title: "Oops! Something went wrong!",
