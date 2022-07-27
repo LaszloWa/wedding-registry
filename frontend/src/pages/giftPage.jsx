@@ -47,10 +47,6 @@ export const GiftPage = () => {
 			.catch((e) => setIsLoading(false));
 	}, []);
 
-	const sendResponseToast = (response) => {
-		toast.push(response);
-	};
-
 	const handleReserveGift = (gift, isReserved) => {
 		console.log("gift, isReserved", gift, isReserved);
 		const requestBody = {
@@ -59,6 +55,8 @@ export const GiftPage = () => {
 			revisionId: gift._rev,
 			isReserved,
 		};
+
+		console.log("the request body", requestBody);
 
 		sendRequest("update-gift", requestBody, toast);
 	};
