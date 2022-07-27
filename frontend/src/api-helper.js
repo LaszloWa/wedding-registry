@@ -16,6 +16,8 @@ async function sendRequest(endpoint, body, callback) {
 		requestOptions,
 	);
 
+	console.log("the complete resposne", response);
+
 	if (!response.ok && callback.push) {
 		const statusCode = response.status;
 		switch (statusCode) {
