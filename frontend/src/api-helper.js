@@ -17,7 +17,6 @@ async function sendRequest(endpoint, body, callback) {
 	);
 
 	console.log("the complete resposne", response);
-	console.log("the response body", await response.body.json());
 
 	if (!response.ok && callback.push) {
 		const statusCode = response.status;
@@ -31,6 +30,7 @@ async function sendRequest(endpoint, body, callback) {
 				});
 			default:
 				console.log("I am firing here");
+				console.log("the response body", await response.body.json());
 				return callback.push({
 					title: "Oops! Something went wrong!",
 					description: "Please try again or reload the page.",
