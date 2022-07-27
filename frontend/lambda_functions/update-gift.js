@@ -39,62 +39,74 @@ exports.handler = async (event, handler, callback) => {
 	const today = new Date().toISOString();
 
 	console.log("beep book getting here");
-	return client
-		.patch(id) // Document ID to patch
-		.ifRevisionId(revisionId)
-		.set({
-			isReserved: true,
-			reservedBy: {
-				_type: "reference",
-				_ref: `person_${user.username.split(" ").join("-").toLowerCase()}`,
-			},
-			reservedAt: today,
-		}) // Shallow merge
-		.commit() // Perform the patch and return a promise
-		.then((response) => {
-			console.log("made it to the final then", response);
-			const giftName = response.name;
-			const reservedMessage = JSON.stringify({
-				title: `${giftName} successfully reserved!`,
-				status: "success",
-			});
-			const unreservedMessage = JSON.stringify({
-				title: `${giftName} was unreserved.`,
-				description: `It is now available for others to reserve.`,
-				status: "warning",
-			});
-			return {
-				statusCode: 200,
-				headers: {
-					"Content-Type": "application/json",
+	try {
+		return client
+			.patch(id) // Document ID to patch
+			.ifRevisionId(revisionId)
+			.set({
+				isReserved: true,
+				reservedBy: {
+					_type: "reference",
+					_ref: `person_${user.username.split(" ").join("-").toLowerCase()}`,
 				},
-				body: isReserved ? reservedMessage : unreservedMessage,
-			};
-		})
-		.catch((err) => {
-			if (err.statusCode === 409) {
+				reservedAt: today,
+			}) // Shallow merge
+			.commit() // Perform the patch and return a promise
+			.then((response) => {
+				console.log("made it to the final then", response);
+				const giftName = response.name;
+				const reservedMessage = JSON.stringify({
+					title: `${giftName} successfully reserved!`,
+					status: "success",
+				});
+				const unreservedMessage = JSON.stringify({
+					title: `${giftName} was unreserved.`,
+					description: `It is now available for others to reserve.`,
+					status: "warning",
+				});
 				return {
-					statusCode: 409,
+					statusCode: 200,
 					headers: {
 						"Content-Type": "application/json",
 					},
+					body: isReserved ? reservedMessage : unreservedMessage,
+				};
+			})
+			.catch((err) => {
+				if (err.statusCode === 409) {
+					return {
+						statusCode: 409,
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							title: "Oops! Something went wrong.",
+							description: `Your data seems to be outdated. ${name} has already been reserved. Please refresh the page!`,
+							status: "warning",
+						}),
+					};
+				}
+
+				console.log("I am an error", err);
+
+				return {
+					statusCode: err.statusCode,
 					body: JSON.stringify({
-						title: "Oops! Something went wrong.",
-						description: `Your data seems to be outdated. ${name} has already been reserved. Please refresh the page!`,
-						status: "warning",
+						title: "Oops! Something went wrong",
+						description: err.message,
+						status: "error",
 					}),
 				};
-			}
-
-			console.log("I am an error", err);
-
-			return {
-				statusCode: err.statusCode,
-				body: JSON.stringify({
-					title: "Oops! Something went wrong",
-					description: err.message,
-					status: "error",
-				}),
-			};
-		});
+			});
+	} catch {
+		console.log("the error", err);
+		return {
+			statusCode: err.statusCode,
+			body: JSON.stringify({
+				title: "Oops! Something went wrong",
+				description: err.message,
+				status: "error",
+			}),
+		};
+	}
 };
