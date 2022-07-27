@@ -16,7 +16,7 @@ async function sendRequest(endpoint, body, callback) {
 		requestOptions,
 	);
 
-	console.log("the complete resposne", response);
+	console.log("the request options", requestOptions);
 
 	if (!response.ok && callback.push) {
 		const statusCode = response.status;
