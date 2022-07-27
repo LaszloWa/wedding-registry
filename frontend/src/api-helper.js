@@ -30,7 +30,7 @@ async function sendRequest(endpoint, body, callback) {
 				});
 			default:
 				console.log("I am firing here");
-				console.log("the response body", await response.body.json());
+				console.log("the response body", response.body.json());
 				return callback.push({
 					title: "Oops! Something went wrong!",
 					description: "Please try again or reload the page.",
