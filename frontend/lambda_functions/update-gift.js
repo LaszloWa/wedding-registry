@@ -12,6 +12,7 @@ const client = sanityClient({
 });
 
 exports.handler = async (event, handler, callback) => {
+	console.log("This is the beginning");
 	const { name, id, revisionId, isReserved } = JSON.parse(event.body);
 
 	const authenticate = await fetch(`${URL}/.netlify/functions/authenticate`, {
