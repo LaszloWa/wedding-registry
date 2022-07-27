@@ -36,6 +36,8 @@ exports.handler = async (event, handler, callback) => {
 
 	const user = await authenticate.json();
 	const today = new Date().toISOString();
+
+	console.log("beep book getting here");
 	return client
 		.patch(id) // Document ID to patch
 		.ifRevisionId(revisionId)
@@ -49,6 +51,7 @@ exports.handler = async (event, handler, callback) => {
 		}) // Shallow merge
 		.commit() // Perform the patch and return a promise
 		.then((response) => {
+			console.log("made it to the final then", response);
 			const giftName = response.name;
 			const reservedMessage = JSON.stringify({
 				title: `${giftName} successfully reserved!`,
@@ -81,6 +84,8 @@ exports.handler = async (event, handler, callback) => {
 					}),
 				};
 			}
+
+			console.log("I am an error", err);
 
 			return {
 				statusCode: err.statusCode,
