@@ -1,4 +1,4 @@
-exports.handler = async () => {
+export async function handler() {
 	return {
 		statusCode: 200,
 		headers: {
@@ -8,4 +8,4 @@ exports.handler = async () => {
 		},
 		body: JSON.stringify({ message: "Logged out successfully" }),
 	};
-};
+}

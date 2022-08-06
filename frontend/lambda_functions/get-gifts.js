@@ -16,7 +16,7 @@ const imageUrl = (source) => builder.image(source);
 
 const query = '*[_type == "gift" && !isHidden]';
 
-exports.handler = async (event, handler, callback) => {
+export async function handler(event, handler, callback) {
 	console.log("Fetching all gifts!");
 
 	return client
@@ -42,4 +42,4 @@ exports.handler = async (event, handler, callback) => {
 				body: JSON.stringify(error),
 			});
 		});
-};
+}

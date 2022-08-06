@@ -31,7 +31,7 @@ const createJwtCookie = (username) => {
 	return jwtCookie;
 };
 
-exports.handler = async (event) => {
+export async function handler(event) {
 	let errorStatusCode = 500;
 	const appPassword = process.env.APP_PASSWORD;
 
@@ -78,4 +78,4 @@ exports.handler = async (event) => {
 			body: JSON.stringify(err.message),
 		};
 	}
-};
+}
