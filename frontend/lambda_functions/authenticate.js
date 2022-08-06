@@ -16,7 +16,7 @@ rMbu85U1AAG5hPO3ufAWep3Ys9SzAMEoXKEl5wDF4APUpkUazXg3B5ti43TYrCLN
 1M9j/NEu1n0C/6b2ohg3wzUCAwEAAQ==
 -----END PUBLIC KEY-----`;
 
-exports.handler = async (event) => {
+export async function handler(event) {
 	const cookies = event.headers.cookie && parse(event.headers.cookie);
 
 	if (!cookies || !cookies.jwt) {
@@ -49,4 +49,4 @@ exports.handler = async (event) => {
 			body: JSON.stringify({ msg: err.message }),
 		};
 	}
-};
+}
