@@ -1,20 +1,11 @@
 async function sendRequest(endpoint, body, callback) {
-	const requestOptions = {
+	const response = await fetch(`/.netlify/functions/${endpoint}`, {
 		method: "POST",
 		headers: {
-			Accept: "application/json",
+			["Content-Type"]: "application/json",
 		},
-	};
-
-	if (body) {
-		requestOptions.headers["Content-Type"] = "application/json";
-		requestOptions.body = body;
-	}
-
-	const response = await fetch(
-		`/.netlify/functions/${endpoint}`,
-		requestOptions,
-	);
+		body: body ? JSON.stringify(body) : undefined,
+	});
 
 	if (!response.ok && callback.push) {
 		const statusCode = response.status;

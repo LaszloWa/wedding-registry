@@ -12,7 +12,6 @@ const client = sanityClient({
 });
 
 exports.handler = async (event) => {
-	console.log("Attempting to update a gift");
 	const { name, id, revisionId, isReserved } = JSON.parse(event.body);
 
 	const authenticate = await fetch(`${URL}/.netlify/functions/authenticate`, {
