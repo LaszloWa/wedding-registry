@@ -20,3 +20,4 @@
   # if one has been set, or the root directory if
   # a base hasn’t been set.
   directory = "lambda_functions/"
+  node_bundler = "esbuild"
