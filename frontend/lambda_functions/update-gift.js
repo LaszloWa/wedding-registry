@@ -11,7 +11,8 @@ const client = sanityClient({
 	useCdn: false, // `false` if you want to ensure fresh data
 });
 
-exports.handler = async (event, handler, callback) => {
+exports.handler = async (event) => {
+	console.log("Attempting to update a gift");
 	const { name, id, revisionId, isReserved } = JSON.parse(event.body);
 
 	const authenticate = await fetch(`${URL}/.netlify/functions/authenticate`, {
